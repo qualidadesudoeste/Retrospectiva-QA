@@ -149,7 +149,7 @@ export default function Home() {
   );
 
   // Calcular métricas gerais
-  const totalSprints = 394; // Valor fixo corrigido
+  const totalSprints = 298; // Valor fixo corrigido
   const totalCiclos = sprints.reduce((sum, s) => sum + (s.num_ciclos || 0), 0);
   const sprintsLiberadas = 244; // Valor fixo corrigido
   const sprintsAtrasadas = sprints.filter(s => s.atrasada === 1).length;
