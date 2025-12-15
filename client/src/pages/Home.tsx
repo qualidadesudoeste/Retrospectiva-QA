@@ -174,7 +174,7 @@ export default function Home() {
   }));
 
   // Score por cliente
-  // Calcular scores de todos os clientes (exceto SEMOP) baseado em MediaRetrabalho dos projetos
+  // Calcular taxa média de retrabalho de todos os clientes (exceto SEMOP)
   const allScores = Object.entries(
     metricasProjetos
       .filter(p => p.Cliente && p.Cliente !== 'SEMOP') // Remover SEMOP
@@ -182,20 +182,19 @@ export default function Home() {
       .reduce((acc, p) => {
         const cliente = p.Cliente;
         if (!acc[cliente]) {
-          acc[cliente] = { totalScore: 0, count: 0 };
+          acc[cliente] = { totalRetrabalho: 0, count: 0 };
         }
-        // Calcular score: 100 - MediaRetrabalho do projeto
+        // Somar taxa de retrabalho de cada projeto
         const mediaRetrabalho = parseFloat(p.MediaRetrabalho) || 0;
-        const scoreIndividual = 100 - mediaRetrabalho;
-        acc[cliente].totalScore += scoreIndividual;
+        acc[cliente].totalRetrabalho += mediaRetrabalho;
         acc[cliente].count += 1;
         return acc;
-      }, {} as Record<string, { totalScore: number; count: number }>)
+      }, {} as Record<string, { totalRetrabalho: number; count: number }>)
   ).map(([cliente, data]) => ({
     cliente,
-    score: parseFloat((data.totalScore / data.count).toFixed(1)),
+    score: parseFloat((data.totalRetrabalho / data.count).toFixed(1)),
   }))
-    .sort((a, b) => b.score - a.score);
+    .sort((a, b) => a.score - b.score); // Ordenar do menor para o maior (menor retrabalho = melhor)
 
   // Garantir que SEMED e SEMGE estejam incluídos
   const semedData = allScores.find(s => s.cliente === 'SEMED');
