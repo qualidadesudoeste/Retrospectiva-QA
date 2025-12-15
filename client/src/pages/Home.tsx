@@ -174,10 +174,12 @@ export default function Home() {
   }));
 
   // Score por cliente
-  // Calcular taxa média de retrabalho de todos os clientes (exceto SEMOP)
+  // Calcular taxa média de retrabalho de todos os clientes (exceto SEMOP, SECULT e PRODEB)
   const allScores = Object.entries(
     metricasProjetos
       .filter(p => p.Cliente && p.Cliente !== 'SEMOP') // Remover SEMOP
+      .filter(p => p.Cliente !== 'SECULT') // Remover SECULT
+      .filter(p => p.Cliente !== 'PRODEB') // Remover PRODEB
       .filter(p => !(p.Cliente === 'TRANSALVADOR' && p.Projeto && p.Projeto.includes('PATRIMÔNIO'))) // Remover PATRIMÔNIO de TRANSALVADOR
       .reduce((acc, p) => {
         const cliente = p.Cliente;
@@ -196,15 +198,19 @@ export default function Home() {
   }))
     .sort((a, b) => a.score - b.score); // Ordenar do menor para o maior (menor retrabalho = melhor)
 
-  // Garantir que SEMED e SEMGE estejam incluídos
+  // Garantir que SEMED, SEMGE, SEMPRE e TRANSALVADOR estejam incluídos
   const semedData = allScores.find(s => s.cliente === 'SEMED');
   const semgeData = allScores.find(s => s.cliente === 'SEMGE');
+  const sempreData = allScores.find(s => s.cliente === 'SEMPRE');
+  const transalvadorData = allScores.find(s => s.cliente === 'TRANSALVADOR');
   let scorePorCliente = allScores.slice(0, 8);
   
   // Lista de clientes que devem estar garantidos
   const clientesGarantidos = [
     { data: semedData, nome: 'SEMED' },
-    { data: semgeData, nome: 'SEMGE' }
+    { data: semgeData, nome: 'SEMGE' },
+    { data: sempreData, nome: 'SEMPRE' },
+    { data: transalvadorData, nome: 'TRANSALVADOR' }
   ];
   
   // Adicionar clientes garantidos que não estão no top 8
