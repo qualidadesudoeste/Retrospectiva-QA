@@ -81,6 +81,7 @@ export default function Home() {
   const [, setLocation] = useLocation();
   const [sprints, setSprints] = useState<SprintNovembro[]>([]);
   const [metricasHoras, setMetricasHoras] = useState<MetricasHoras[]>([]);
+  const [metricasProjetos, setMetricasProjetos] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
@@ -102,7 +103,7 @@ export default function Home() {
         });
         setSprints(filtrado);
         loaded++;
-        if (loaded === 2) setLoading(false);
+        if (loaded === 3) setLoading(false);
       },
     });
 
@@ -113,7 +114,18 @@ export default function Home() {
       complete: (results) => {
         setMetricasHoras(results.data as MetricasHoras[]);
         loaded++;
-        if (loaded === 2) setLoading(false);
+        if (loaded === 3) setLoading(false);
+      },
+    });
+
+    Papa.parse("/metricas_qualidade_projeto.csv", {
+      download: true,
+      header: true,
+      dynamicTyping: true,
+      complete: (results) => {
+        setMetricasProjetos(results.data as any[]);
+        loaded++;
+        if (loaded === 3) setLoading(false);
       },
     });
   }, []);
@@ -162,34 +174,46 @@ export default function Home() {
   }));
 
   // Score por cliente
-  // Calcular scores de todos os clientes (exceto SEMOP) baseado em retrabalho
+  // Calcular scores de todos os clientes (exceto SEMOP) baseado em MediaRetrabalho dos projetos
   const allScores = Object.entries(
-    sprints
-      .filter(s => s.cliente !== 'SEMOP') // Remover SEMOP
-      .reduce((acc, s) => {
-        if (!acc[s.cliente]) {
-          acc[s.cliente] = { totalRetrabalho: 0, count: 0 };
+    metricasProjetos
+      .filter(p => p.Cliente && p.Cliente !== 'SEMOP') // Remover SEMOP
+      .filter(p => !(p.Cliente === 'TRANSALVADOR' && p.Projeto && p.Projeto.includes('PATRIMÔNIO'))) // Remover PATRIMÔNIO de TRANSALVADOR
+      .reduce((acc, p) => {
+        const cliente = p.Cliente;
+        if (!acc[cliente]) {
+          acc[cliente] = { totalScore: 0, count: 0 };
         }
-        // Calcular score: 100 - taxa_retrabalho
-        const taxaRetrabalho = parseFloat(s.retrabalho) || 0;
-        const scoreIndividual = 100 - taxaRetrabalho;
-        acc[s.cliente].totalRetrabalho += scoreIndividual;
-        acc[s.cliente].count += 1;
+        // Calcular score: 100 - MediaRetrabalho do projeto
+        const mediaRetrabalho = parseFloat(p.MediaRetrabalho) || 0;
+        const scoreIndividual = 100 - mediaRetrabalho;
+        acc[cliente].totalScore += scoreIndividual;
+        acc[cliente].count += 1;
         return acc;
-      }, {} as Record<string, { totalRetrabalho: number; count: number }>)
+      }, {} as Record<string, { totalScore: number; count: number }>)
   ).map(([cliente, data]) => ({
     cliente,
-    score: parseFloat((data.totalRetrabalho / data.count).toFixed(1)),
+    score: parseFloat((data.totalScore / data.count).toFixed(1)),
   }))
     .sort((a, b) => b.score - a.score);
 
-  // Garantir que SEMED esteja incluído
+  // Garantir que SEMED e SEMGE estejam incluídos
   const semedData = allScores.find(s => s.cliente === 'SEMED');
+  const semgeData = allScores.find(s => s.cliente === 'SEMGE');
   let scorePorCliente = allScores.slice(0, 8);
   
-  if (semedData && !scorePorCliente.find(s => s.cliente === 'SEMED')) {
-    // Se SEMED não está no top 8, substituir o último
-    scorePorCliente = [...scorePorCliente.slice(0, 7), semedData];
+  // Lista de clientes que devem estar garantidos
+  const clientesGarantidos = [
+    { data: semedData, nome: 'SEMED' },
+    { data: semgeData, nome: 'SEMGE' }
+  ];
+  
+  // Adicionar clientes garantidos que não estão no top 8
+  for (const { data, nome } of clientesGarantidos) {
+    if (data && !scorePorCliente.find(s => s.cliente === nome)) {
+      // Remover o último e adicionar o cliente garantido
+      scorePorCliente = [...scorePorCliente.slice(0, scorePorCliente.length - 1), data];
+    }
   }
 
   // Top clientes por número de sprints
