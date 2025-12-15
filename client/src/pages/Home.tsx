@@ -325,7 +325,7 @@ export default function Home() {
                 <Target className="w-5 h-5 text-foreground" />
               </div>
               <h3 className="text-2xl font-bold text-foreground">
-                Score de Qualidade por Cliente
+                Score de Retrabalho por Cliente
               </h3>
             </div>
             <ResponsiveContainer width="100%" height={320}>
