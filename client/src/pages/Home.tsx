@@ -149,9 +149,9 @@ export default function Home() {
   );
 
   // Calcular métricas gerais
-  const totalSprints = 454; // Valor fixo corrigido
+  const totalSprints = 394; // Valor fixo corrigido
   const totalCiclos = sprints.reduce((sum, s) => sum + (s.num_ciclos || 0), 0);
-  const sprintsLiberadas = 183; // Valor fixo corrigido
+  const sprintsLiberadas = 244; // Valor fixo corrigido
   const sprintsAtrasadas = sprints.filter(s => s.atrasada === 1).length;
   const taxaAceite1Ciclo = (sprints.filter(s => s.aceite_1ciclo === 1).length / totalSprints * 100).toFixed(1);
   const scoreMedio = (sprints.reduce((sum, s) => sum + (s.score_qualidade || 0), 0) / totalSprints).toFixed(1);
