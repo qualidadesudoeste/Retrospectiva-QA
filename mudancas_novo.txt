@@ -1,0 +1,99 @@
+            {/* Processos */}
+            <div className="bg-card/50 rounded-lg p-6 border border-border/50 hover:border-primary/50 transition-all duration-300">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 bg-secondary/10 rounded-lg">
+                  <Settings className="w-5 h-5 text-secondary" />
+                </div>
+                <h4 className="text-lg font-semibold text-foreground">Processos</h4>
+              </div>
+              <div className="space-y-4">
+                <div className="pl-4 border-l-2 border-destructive/50">
+                  <div className="text-xs font-medium text-destructive mb-1">ANTES</div>
+                  <p className="text-sm text-muted-foreground">Cada time com ritual próprio, inconsistência generalizada</p>
+                </div>
+                <div className="pl-4 border-l-2 border-primary">
+                  <div className="text-xs font-medium text-primary mb-1">AGORA</div>
+                  <p className="text-sm text-foreground">Fluxos padronizados, DoR/DoD alinhados, refinamento focado em risco</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Testes */}
+            <div className="bg-card/50 rounded-lg p-6 border border-border/50 hover:border-accent/50 transition-all duration-300">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 bg-accent/10 rounded-lg">
+                  <CheckCircle className="w-5 h-5 text-accent" />
+                </div>
+                <h4 className="text-lg font-semibold text-foreground">Testes</h4>
+              </div>
+              <div className="space-y-4">
+                <div className="pl-4 border-l-2 border-destructive/50">
+                  <div className="text-xs font-medium text-destructive mb-1">ANTES</div>
+                  <p className="text-sm text-muted-foreground">Muito manual, pouco critério</p>
+                </div>
+                <div className="pl-4 border-l-2 border-primary">
+                  <div className="text-xs font-medium text-primary mb-1">AGORA</div>
+                  <p className="text-sm text-foreground">Pirâmide equilibrada, casos baseados em risco, automação estratégica</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Métricas */}
+            <div className="bg-card/50 rounded-lg p-6 border border-border/50 hover:border-primary/50 transition-all duration-300">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 bg-primary/10 rounded-lg">
+                  <BarChart3 className="w-5 h-5 text-primary" />
+                </div>
+                <h4 className="text-lg font-semibold text-foreground">Métricas</h4>
+              </div>
+              <div className="space-y-4">
+                <div className="pl-4 border-l-2 border-destructive/50">
+                  <div className="text-xs font-medium text-destructive mb-1">ANTES</div>
+                  <p className="text-sm text-muted-foreground">"Sensação térmica" de qualidade</p>
+                </div>
+                <div className="pl-4 border-l-2 border-primary">
+                  <div className="text-xs font-medium text-primary mb-1">AGORA</div>
+                  <p className="text-sm text-foreground">Indicadores objetivos para decisões estratégicas, não para punição</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Pessoas */}
+            <div className="bg-card/50 rounded-lg p-6 border border-border/50 hover:border-secondary/50 transition-all duration-300">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 bg-secondary/10 rounded-lg">
+                  <Users className="w-5 h-5 text-secondary" />
+                </div>
+                <h4 className="text-lg font-semibold text-foreground">Pessoas</h4>
+              </div>
+              <div className="space-y-4">
+                <div className="pl-4 border-l-2 border-destructive/50">
+                  <div className="text-xs font-medium text-destructive mb-1">ANTES</div>
+                  <p className="text-sm text-muted-foreground">QA como gargalo</p>
+                </div>
+                <div className="pl-4 border-l-2 border-primary">
+                  <div className="text-xs font-medium text-primary mb-1">AGORA</div>
+                  <p className="text-sm text-foreground">QA como facilitador, times autônomos, conversas antecipadas</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Cultura */}
+            <div className="bg-card/50 rounded-lg p-6 border border-border/50 hover:border-accent/50 transition-all duration-300">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 bg-accent/10 rounded-lg">
+                  <Lightbulb className="w-5 h-5 text-accent" />
+                </div>
+                <h4 className="text-lg font-semibold text-foreground">Cultura</h4>
+              </div>
+              <div className="space-y-4">
+                <div className="pl-4 border-l-2 border-destructive/50">
+                  <div className="text-xs font-medium text-destructive mb-1">ANTES</div>
+                  <p className="text-sm text-muted-foreground">Erro escondido</p>
+                </div>
+                <div className="pl-4 border-l-2 border-primary">
+                  <div className="text-xs font-medium text-primary mb-1">AGORA</div>
+                  <p className="text-sm text-foreground">Erro analisado, post-mortem construtivo, melhoria contínua real</p>
+                </div>
+              </div>
+            </div>
