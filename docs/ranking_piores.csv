@@ -1,0 +1,11 @@
+Projeto,NumCiclos,MediaRetrabalho,TaxaCorretivas,ScoreQualidade,Classificacao
+PATRIMÔNIO,1,100.0,100.0,100.0,Crítico
+FROTAS,2,72.8,77.2,75.0,Crítico
+SISTEMA DE SINALIZAÇÃO,1,68.0,68.0,68.0,Crítico
+CONSELHO ESCOLAR,3,58.8,67.7,63.2,Crítico
+AGENDAMENTO,1,54.5,54.5,54.5,Crítico
+FOLHA DE PAGAMENTO,6,48.1,57.0,52.6,Crítico
+SYSMOBI,26,25.7,52.1,38.9,Crítico
+EDUCAÇÃO,4,34.9,42.6,38.8,Crítico
+SIGSUAS,20,34.3,38.8,36.6,Crítico
+PLANO EDUCACIONAL,3,30.8,37.1,34.0,Regular
