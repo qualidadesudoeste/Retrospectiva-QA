@@ -198,8 +198,7 @@ export default function Home() {
   }))
     .sort((a, b) => a.score - b.score); // Ordenar do menor para o maior (menor retrabalho = melhor)
 
-  // Garantir que SEMED, SEMGE, SEMPRE e TRANSALVADOR estejam incluídos
-  const semedData = allScores.find(s => s.cliente === 'SEMED');
+  // Garantir que SEMGE, SEMPRE e TRANSALVADOR estejam incluídos
   const semgeData = allScores.find(s => s.cliente === 'SEMGE');
   const sempreData = allScores.find(s => s.cliente === 'SEMPRE');
   const transalvadorData = allScores.find(s => s.cliente === 'TRANSALVADOR');
@@ -207,7 +206,6 @@ export default function Home() {
   
   // Lista de clientes que devem estar garantidos
   const clientesGarantidos = [
-    { data: semedData, nome: 'SEMED' },
     { data: semgeData, nome: 'SEMGE' },
     { data: sempreData, nome: 'SEMPRE' },
     { data: transalvadorData, nome: 'TRANSALVADOR' }
