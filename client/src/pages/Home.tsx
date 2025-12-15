@@ -162,21 +162,24 @@ export default function Home() {
   }));
 
   // Score por cliente
-  // Calcular scores de todos os clientes (exceto SEMOP)
+  // Calcular scores de todos os clientes (exceto SEMOP) baseado em retrabalho
   const allScores = Object.entries(
     sprints
       .filter(s => s.cliente !== 'SEMOP') // Remover SEMOP
       .reduce((acc, s) => {
         if (!acc[s.cliente]) {
-          acc[s.cliente] = { total: 0, count: 0 };
+          acc[s.cliente] = { totalRetrabalho: 0, count: 0 };
         }
-        acc[s.cliente].total += s.score_qualidade || 0;
+        // Calcular score: 100 - taxa_retrabalho
+        const taxaRetrabalho = parseFloat(s.retrabalho) || 0;
+        const scoreIndividual = 100 - taxaRetrabalho;
+        acc[s.cliente].totalRetrabalho += scoreIndividual;
         acc[s.cliente].count += 1;
         return acc;
-      }, {} as Record<string, { total: number; count: number }>)
+      }, {} as Record<string, { totalRetrabalho: number; count: number }>)
   ).map(([cliente, data]) => ({
     cliente,
-    score: parseFloat((data.total / data.count).toFixed(1)),
+    score: parseFloat((data.totalRetrabalho / data.count).toFixed(1)),
   }))
     .sort((a, b) => b.score - a.score);
 
