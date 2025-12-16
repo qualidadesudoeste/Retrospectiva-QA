@@ -97,7 +97,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         {!collapsed && (
           <div className="p-4 border-t border-sidebar-border">
             <p className="text-xs text-muted-foreground text-center">
-              Dashboard QA 2025
+              Retrospectiva Qualidade
             </p>
           </div>
         )}
