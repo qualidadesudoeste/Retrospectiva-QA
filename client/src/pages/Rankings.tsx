@@ -22,7 +22,6 @@ interface Sprint0Bugs {
   cliente: string;
   projeto: string;
   sprint: string;
-  duracao: number;
 }
 
 export default function Rankings() {
@@ -155,18 +154,6 @@ export default function Rankings() {
                 
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <span className="px-2.5 py-1 bg-blue-500/5 text-blue-600/80 rounded-md text-xs font-semibold flex items-center gap-1.5 border border-blue-500/20 cursor-help hover:bg-blue-500/10 transition-colors">
-                      <Clock className="w-3 h-3" />
-                      {item.duracao}d
-                    </span>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Duração da Sprint</p>
-                  </TooltipContent>
-                </Tooltip>
-                
-                <Tooltip>
-                  <TooltipTrigger asChild>
                     <span className="px-2.5 py-1 bg-green-500/5 text-green-600/80 rounded-md text-xs font-semibold flex items-center gap-1.5 border border-green-500/20 cursor-help hover:bg-green-500/10 transition-colors">
                       <Bug className="w-3 h-3" />
                       0
@@ -210,19 +197,21 @@ export default function Rankings() {
     { projeto: "SMED - Gestão Pessoas", percentual: 29.41 },
   ];
 
-  // Dados para Sprints com 0 Bugs
+  // Dados para Sprints com 0 Bugs (Aceite no 1º Ciclo)
   const sprints0Bugs: Sprint0Bugs[] = [
-    { cliente: "SEMGE", projeto: "CONTRATOS", sprint: "32.0.0", duracao: 14 },
-    { cliente: "SEMOB", projeto: "SYSMOBI", sprint: "26.2.0", duracao: 14 },
-    { cliente: "SEMOB", projeto: "SYSMOBI", sprint: "28.0.0", duracao: 14 },
-    { cliente: "SEMOB", projeto: "SYSMOBI", sprint: "37.0.0", duracao: 14 },
-    { cliente: "CODECON", projeto: "FISCALIZAÇÃO", sprint: "7.0.0", duracao: 14 },
-    { cliente: "CODECON", projeto: "FISCALIZAÇÃO", sprint: "10.0.0", duracao: 14 },
-    { cliente: "SEDUR", projeto: "LICENCIAMENTO", sprint: "36.0.0", duracao: 14 },
-    { cliente: "SEDUR", projeto: "CONTRATOS", sprint: "6.0.0", duracao: 14 },
-    { cliente: "SMED", projeto: "ALIMENTAÇÃO", sprint: "6", duracao: 14 },
-    { cliente: "SEMED", projeto: "SIE CORURIPE", sprint: "26", duracao: 14 },
-    { cliente: "SEMPRE", projeto: "SIGSUAS", sprint: "16.0.0", duracao: 14 },
+    { cliente: "SEMGE", projeto: "CONTRATOS", sprint: "32.0.0" },
+    { cliente: "SEMOB", projeto: "SYSMOBI", sprint: "26.2.0" },
+    { cliente: "SEMOB", projeto: "SYSMOBI", sprint: "28.0.0" },
+    { cliente: "SEMOB", projeto: "SYSMOBI", sprint: "37.0.0" },
+    { cliente: "CODECON", projeto: "FISCALIZAÇÃO", sprint: "7.0.0" },
+    { cliente: "CODECON", projeto: "FISCALIZAÇÃO", sprint: "10.0.0" },
+    { cliente: "SEDUR", projeto: "LICENCIAMENTO", sprint: "36.0.0" },
+    { cliente: "SEDUR", projeto: "FISCALIZAÇÃO", sprint: "14.0.0" },
+    { cliente: "SEDUR", projeto: "CONTRATOS", sprint: "6.0.0" },
+    { cliente: "SMED", projeto: "ALIMENTAÇÃO", sprint: "6" },
+    { cliente: "SEMED", projeto: "SIE CORUÍPE", sprint: "26.0.0" },
+    { cliente: "SEMPRE", projeto: "SIGSUAS", sprint: "16.0.0" },
+    { cliente: "TRANSALVADOR", projeto: "SISTEMA DE SINALIZAÇÃO", sprint: "10.0.0" },
   ];
 
   return (
