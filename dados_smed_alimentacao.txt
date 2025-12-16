@@ -1,0 +1,47 @@
+DADOS CORRETOS DE SMED-ALIMENTAÇÃO (SMED-MAE) EXTRAÍDOS DO PDF
+
+Sprint 1: 03/01 a 06/01 - 2 ciclos (Janeiro)
+Sprint 2: 03/01 a 06/01 - 4 ciclos (Janeiro)
+Sprint 3: 18/02 a 21/02 - 2 ciclos (Fevereiro)
+Sprint 4: 16/04 a 17/04 - 2 ciclos (Abril)
+Sprint 5: 05/05 a 06/05 - 2 ciclos (Maio)
+Sprint 6: 09/06 a 10/06 - 1 ciclo (Junho)
+Sprint 6.1: 15/07 a 16/07 - 3 ciclos (Julho)
+Sprint 7: 24/07 a 28/07 - 2 ciclos (Julho)
+Sprint 8: 01/10 a 03/10 - 2 ciclos (Outubro)
+Sprint 9: 29/10 a 30/10 - 2 ciclos (Outubro)
+
+CONTAGEM POR MÊS:
+Janeiro: 2 + 4 = 6 ciclos
+Fevereiro: 2 ciclos
+Março: 0 ciclos
+Abril: 2 ciclos
+Maio: 2 ciclos
+Junho: 1 ciclo
+Julho: 3 + 2 = 5 ciclos
+Agosto: 0 ciclos
+Setembro: 0 ciclos
+Outubro: 2 + 2 = 4 ciclos
+Novembro: 0 ciclos
+
+DADOS ATUAIS NO CSV (INCORRETOS):
+Janeiro: 7
+Fevereiro: 2
+Março: 0
+Abril: 2
+Maio: 0
+Junho: 0
+Julho: 0
+Agosto: 0
+Setembro: 0
+Outubro: 0
+Novembro: 0
+
+CORREÇÕES NECESSÁRIAS:
+Janeiro: 7 → 6
+Fevereiro: 2 → 2 (correto)
+Abril: 2 → 2 (correto)
+Maio: 0 → 2
+Junho: 0 → 1
+Julho: 0 → 5
+Outubro: 0 → 4
