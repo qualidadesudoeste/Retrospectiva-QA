@@ -1,0 +1,26 @@
+SEDUR-CONTRATOS - Dados Corretos do PDF
+
+Versão 2.0.0 Corretiva (Junho):
+- 1º Ciclo: 10/06 a 11/06 - TESTE
+- 2º Ciclo: 12/06 - RE-TESTE
+- 3º Ciclo: 13/06 - RE-TESTE
+Total: 3 ciclos em JUNHO
+
+Versão 4.0.0 (Novembro):
+- 1º Ciclo: 26/11 a 26/11 - TESTE
+Total: 1 ciclo em NOVEMBRO
+
+Versão 5.0.0 (Novembro):
+- 1º Ciclo: 14/11 a 19/11 - TESTE
+- 2º Ciclo: 26/11 - RE-TESTE
+Total: 2 ciclos em NOVEMBRO
+
+Versão 6.0.0 (Novembro):
+- 1º Ciclo: 24/11 a 24/11 - TESTE
+Total: 1 ciclo em NOVEMBRO
+
+RESUMO MENSAL:
+- Junho: 3 ciclos (versão 2.0.0)
+- Novembro: 4 ciclos (1 + 2 + 1 das versões 4.0.0, 5.0.0, 6.0.0)
+
+TOTAL: 7 ciclos em 4 sprints
