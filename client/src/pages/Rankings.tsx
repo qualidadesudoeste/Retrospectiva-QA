@@ -167,7 +167,7 @@ export default function Rankings() {
             
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Coluna Excelentes */}
-              <div className="bg-gradient-to-br from-green-500/5 to-green-500/10 border-2 border-green-500/30 rounded-xl p-6 space-y-3 hover:border-green-500/50 hover:shadow-lg hover:shadow-green-500/20 transition-all duration-300">
+              <div className="bg-transparent border-2 border-green-500/30 rounded-xl p-6 space-y-3 hover:border-green-500/50 hover:shadow-lg hover:shadow-green-500/20 transition-all duration-300">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="p-2 bg-green-500/20 rounded-lg">
                     <CheckCircle className="w-6 h-6 text-green-500" />
@@ -186,7 +186,7 @@ export default function Rankings() {
               </div>
 
               {/* Coluna Atenção */}
-              <div className="bg-gradient-to-br from-orange-500/5 to-orange-500/10 border-2 border-orange-500/30 rounded-xl p-6 space-y-3 hover:border-orange-500/50 hover:shadow-lg hover:shadow-orange-500/20 transition-all duration-300">
+              <div className="bg-transparent border-2 border-orange-500/30 rounded-xl p-6 space-y-3 hover:border-orange-500/50 hover:shadow-lg hover:shadow-orange-500/20 transition-all duration-300">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="p-2 bg-orange-500/20 rounded-lg">
                     <AlertCircle className="w-6 h-6 text-orange-500" />
@@ -205,7 +205,7 @@ export default function Rankings() {
               </div>
 
               {/* Coluna Críticos */}
-              <div className="bg-gradient-to-br from-red-500/5 to-red-500/10 border-2 border-red-500/30 rounded-xl p-6 space-y-3 hover:border-red-500/50 hover:shadow-lg hover:shadow-red-500/20 transition-all duration-300">
+              <div className="bg-transparent border-2 border-red-500/30 rounded-xl p-6 space-y-3 hover:border-red-500/50 hover:shadow-lg hover:shadow-red-500/20 transition-all duration-300">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="p-2 bg-red-500/20 rounded-lg">
                     <XCircle className="w-6 h-6 text-red-500" />
