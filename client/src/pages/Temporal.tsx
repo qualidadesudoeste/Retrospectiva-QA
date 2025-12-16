@@ -48,6 +48,20 @@ export default function Temporal() {
       }));
   }, [mensalData]);
 
+  // Processar dados de ciclos por projeto: converter 0 em null para não renderizar barras vazias
+  const ciclosPorProjetoProcessado = useMemo(() => {
+    return ciclosPorProjeto.map(mes => {
+      const mesProcessado: any = { Mes: mes.Mes };
+      Object.keys(mes).forEach(key => {
+        if (key !== 'Mes') {
+          // Converter 0 em null para que o Recharts não renderize a barra
+          mesProcessado[key] = mes[key] === 0 || mes[key] === '0' ? null : mes[key];
+        }
+      });
+      return mesProcessado;
+    });
+  }, [ciclosPorProjeto]);
+
   // Filtrar dados da tabela
   const dadosFiltrados = useMemo(() => {
     let filtered = evolucaoMensal;
@@ -133,7 +147,7 @@ export default function Temporal() {
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={400}>
-                <BarChart data={ciclosPorProjeto}>
+                <BarChart data={ciclosPorProjetoProcessado}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#333" />
                   <XAxis 
                     dataKey="Mes" 
@@ -163,6 +177,7 @@ export default function Temporal() {
                     iconSize={10}
                   />
                   {/* Barras empilhadas para cada projeto - cores distintas */}
+                  {/* Valores 0 são convertidos em null para não renderizar barras vazias */}
                   <Bar dataKey="SEMGE-CONTRATOS" stackId="a" fill="#3b82f6" />
                   <Bar dataKey="CMS-FOLHA DE PAGAMENTO" stackId="a" fill="#8b5cf6" />
                   <Bar dataKey="CODECON-FISCALIZAÇÃO" stackId="a" fill="#ec4899" />
