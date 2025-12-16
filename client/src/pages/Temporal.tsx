@@ -178,11 +178,6 @@ export default function Temporal() {
       <div className="space-y-6">
         {/* Gráficos */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Título da seção */}
-          <div className="lg:col-span-2">
-            <h2 className="text-2xl font-bold text-foreground mb-4">Evolução Mensal de Ciclos por Projeto</h2>
-          </div>
-
           {/* Grid de gráficos individuais por projeto */}
           {dadosPorProjeto.map((projeto) => (
             <Card key={projeto.nome} className="border-border shadow-lg">
@@ -221,7 +216,7 @@ export default function Temporal() {
                       strokeWidth={2.5}
                       dot={{ fill: projeto.cor, r: 4 }}
                       activeDot={{ r: 6 }}
-                      connectNulls={false}
+                      connectNulls={true}
                     />
                   </LineChart>
                 </ResponsiveContainer>
@@ -262,10 +257,10 @@ export default function Temporal() {
           <CardHeader>
             <CardTitle className="text-base font-bold text-foreground">Filtros de Retrabalho</CardTitle>
           </CardHeader>
-          <CardContent className="grid grid-cols-2 gap-2">
+          <CardContent className="grid grid-cols-2 gap-3">
             <button
               onClick={() => { setSearchTerm(''); setFilterRetrabalho(null); setIsTableExpanded(true); }}
-              className="p-3 bg-background/50 border border-border/40 rounded-lg hover:border-primary/30 hover:bg-background/70 transition-all duration-200 text-left flex items-center justify-between"
+              className="p-4 bg-background/50 border border-border/40 rounded-lg hover:border-primary/30 hover:bg-background/70 transition-all duration-200 text-left flex flex-col gap-2"
             >
               <span className="text-sm font-medium text-foreground">Todos</span>
               <span className="text-lg font-bold text-foreground">{stats.total}</span>
@@ -273,7 +268,7 @@ export default function Temporal() {
 
             <button
               onClick={() => { setFilterRetrabalho('Excelente'); setIsTableExpanded(true); }}
-              className="p-3 bg-green-500/5 border border-green-500/30 rounded-lg hover:border-green-500 hover:bg-green-500/10 transition-all duration-200 text-left flex items-center justify-between"
+              className="p-4 bg-green-500/5 border border-green-500/30 rounded-lg hover:border-green-500 hover:bg-green-500/10 transition-all duration-200 text-left flex flex-col gap-2"
             >
               <span className="text-sm font-medium text-green-400">Excelente (&lt;15%)</span>
               <span className="text-lg font-bold text-green-400">{stats.excelente}</span>
@@ -281,7 +276,7 @@ export default function Temporal() {
 
             <button
               onClick={() => { setFilterRetrabalho('Bom'); setIsTableExpanded(true); }}
-              className="p-3 bg-yellow-500/5 border border-yellow-500/30 rounded-lg hover:border-yellow-500 hover:bg-yellow-500/10 transition-all duration-200 text-left flex items-center justify-between"
+              className="p-4 bg-yellow-500/5 border border-yellow-500/30 rounded-lg hover:border-yellow-500 hover:bg-yellow-500/10 transition-all duration-200 text-left flex flex-col gap-2"
             >
               <span className="text-sm font-medium text-yellow-400">Bom (15-25%)</span>
               <span className="text-lg font-bold text-yellow-400">{stats.bom}</span>
@@ -289,7 +284,7 @@ export default function Temporal() {
 
             <button
               onClick={() => { setFilterRetrabalho('Alto'); setIsTableExpanded(true); }}
-              className="p-3 bg-red-500/5 border border-red-500/30 rounded-lg hover:border-red-500 hover:bg-red-500/10 transition-all duration-200 text-left flex items-center justify-between"
+              className="p-4 bg-red-500/5 border border-red-500/30 rounded-lg hover:border-red-500 hover:bg-red-500/10 transition-all duration-200 text-left flex flex-col gap-2"
             >
               <span className="text-sm font-medium text-red-400">Alto (&gt;25%)</span>
               <span className="text-lg font-bold text-red-400">{stats.alto}</span>
