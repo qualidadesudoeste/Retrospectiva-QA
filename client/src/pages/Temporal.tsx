@@ -409,46 +409,53 @@ export default function Temporal() {
           <CardHeader>
             <CardTitle className="text-base font-bold text-foreground">Filtros de Classificação</CardTitle>
           </CardHeader>
-          <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <CardContent className="space-y-4">
+            {/* Linha 1: Todos (largura total) */}
             <button
               onClick={() => { setSearchTerm(''); setFilterClassificacao(null); setIsTableExpanded(true); }}
-              className="p-4 bg-background/50 border border-border/40 rounded-lg hover:border-primary/30 hover:bg-background/70 transition-all duration-200 text-left flex flex-col gap-2"
+              className="w-full p-4 bg-background/50 border border-border/40 rounded-lg hover:border-primary/30 hover:bg-background/70 transition-all duration-200 text-left flex flex-col gap-2"
             >
               <span className="text-sm font-medium text-foreground">Todos</span>
-              <span className="text-lg font-bold text-foreground">{stats?.totalProjetos}</span>
+              <span className="text-2xl font-bold text-foreground">{stats?.totalProjetos}</span>
             </button>
 
-            <button
-              onClick={() => { setFilterClassificacao('Excelente'); setIsTableExpanded(true); }}
-              className="p-4 bg-primary/5 border border-primary/30 rounded-lg hover:border-primary hover:bg-primary/10 transition-all duration-200 text-left flex flex-col gap-2"
-            >
-              <span className="text-sm font-medium text-primary">Excelentes</span>
-              <span className="text-lg font-bold text-primary">{stats?.excelentes}</span>
-            </button>
+            {/* Linha 2: Regulares e Críticos */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <button
+                onClick={() => { setFilterClassificacao('Regular'); setIsTableExpanded(true); }}
+                className="p-4 bg-yellow-500/5 border border-yellow-500/30 rounded-lg hover:border-yellow-500 hover:bg-yellow-500/10 transition-all duration-200 text-left flex flex-col gap-2"
+              >
+                <span className="text-sm font-medium text-yellow-400">Regulares</span>
+                <span className="text-2xl font-bold text-yellow-400">{stats?.regulares}</span>
+              </button>
 
-            <button
-              onClick={() => { setFilterClassificacao('Bom'); setIsTableExpanded(true); }}
-              className="p-4 bg-blue-500/5 border border-blue-500/30 rounded-lg hover:border-blue-500 hover:bg-blue-500/10 transition-all duration-200 text-left flex flex-col gap-2"
-            >
-              <span className="text-sm font-medium text-blue-400">Bons</span>
-              <span className="text-lg font-bold text-blue-400">{stats?.bons}</span>
-            </button>
+              <button
+                onClick={() => { setFilterClassificacao('Crítico'); setIsTableExpanded(true); }}
+                className="p-4 bg-red-500/5 border border-red-500/30 rounded-lg hover:border-red-500 hover:bg-red-500/10 transition-all duration-200 text-left flex flex-col gap-2"
+              >
+                <span className="text-sm font-medium text-red-400">Críticos</span>
+                <span className="text-2xl font-bold text-red-400">{stats?.criticos}</span>
+              </button>
+            </div>
 
-            <button
-              onClick={() => { setFilterClassificacao('Regular'); setIsTableExpanded(true); }}
-              className="p-4 bg-yellow-500/5 border border-yellow-500/30 rounded-lg hover:border-yellow-500 hover:bg-yellow-500/10 transition-all duration-200 text-left flex flex-col gap-2"
-            >
-              <span className="text-sm font-medium text-yellow-400">Regulares</span>
-              <span className="text-lg font-bold text-yellow-400">{stats?.regulares}</span>
-            </button>
+            {/* Linha 3: Excelentes e Bons */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <button
+                onClick={() => { setFilterClassificacao('Excelente'); setIsTableExpanded(true); }}
+                className="p-4 bg-primary/5 border border-primary/30 rounded-lg hover:border-primary hover:bg-primary/10 transition-all duration-200 text-left flex flex-col gap-2"
+              >
+                <span className="text-sm font-medium text-primary">Excelentes</span>
+                <span className="text-2xl font-bold text-primary">{stats?.excelentes}</span>
+              </button>
 
-            <button
-              onClick={() => { setFilterClassificacao('Crítico'); setIsTableExpanded(true); }}
-              className="p-4 bg-red-500/5 border border-red-500/30 rounded-lg hover:border-red-500 hover:bg-red-500/10 transition-all duration-200 text-left flex flex-col gap-2"
-            >
-              <span className="text-sm font-medium text-red-400">Críticos</span>
-              <span className="text-lg font-bold text-red-400">{stats?.criticos}</span>
-            </button>
+              <button
+                onClick={() => { setFilterClassificacao('Bom'); setIsTableExpanded(true); }}
+                className="p-4 bg-blue-500/5 border border-blue-500/30 rounded-lg hover:border-blue-500 hover:bg-blue-500/10 transition-all duration-200 text-left flex flex-col gap-2"
+              >
+                <span className="text-sm font-medium text-blue-400">Bons</span>
+                <span className="text-2xl font-bold text-blue-400">{stats?.bons}</span>
+              </button>
+            </div>
           </CardContent>
         </Card>
         </div>
