@@ -8,7 +8,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts";
 
 interface RankingEficiencia {
   cliente: string;
@@ -147,12 +146,6 @@ export default function Rankings() {
     { projeto: "SMED - Gestão Pessoas", percentual: 29.41 },
   ];
 
-  const conformidadeChartData = [
-    { name: 'Excelentes', value: 43.75, color: '#22c55e' },
-    { name: 'Atenção', value: 31.25, color: '#f59e0b' },
-    { name: 'Críticos', value: 25.00, color: '#ef4444' },
-  ];
-
   // Dados para Ranking por Retrabalho - Análise Detalhada
   const retrabalhoExcelentes = [
     { projeto: "CODECON Fiscalização", percentual: 0 },
@@ -179,12 +172,6 @@ export default function Rankings() {
     { projeto: "SEFAZ Contratos", percentual: 31.21 },
   ];
 
-  const retrabalhoChartData = [
-    { name: 'Excelente', value: 62.5, color: '#22c55e' },
-    { name: 'Atenção', value: 25.0, color: '#f59e0b' },
-    { name: 'Crítico', value: 12.5, color: '#ef4444' },
-  ];
-
   return (
     <TooltipProvider>
       <DashboardLayout>
@@ -206,91 +193,60 @@ export default function Rankings() {
             
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Coluna Excelentes */}
-              <div className="bg-card/30 border border-green-500/30 rounded-xl p-5 space-y-3">
+              <div className="bg-gradient-to-br from-green-500/5 to-green-500/10 border-2 border-green-500/30 rounded-xl p-6 space-y-3 hover:border-green-500/50 hover:shadow-lg hover:shadow-green-500/20 transition-all duration-300">
                 <div className="flex items-center gap-2 mb-4">
-                  <CheckCircle className="w-5 h-5 text-green-500" />
-                  <h3 className="text-lg font-semibold text-green-500">Excelentes (≥80%)</h3>
+                  <div className="p-2 bg-green-500/20 rounded-lg">
+                    <CheckCircle className="w-6 h-6 text-green-500" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-green-500">Excelentes</h3>
+                    <p className="text-xs text-green-500/70">(≥80%)</p>
+                  </div>
                 </div>
                 {conformidadeExcelentes.map((item, idx) => (
-                  <div key={idx} className="flex items-center justify-between py-2 border-b border-border/30 last:border-0">
-                    <span className="text-sm text-foreground">{item.projeto}</span>
-                    <span className="text-sm font-bold text-green-500">{item.percentual}%</span>
+                  <div key={idx} className="group flex items-center justify-between py-2.5 px-3 rounded-lg border border-border/20 bg-card/30 hover:bg-green-500/10 hover:border-green-500/40 transition-all duration-200 cursor-pointer">
+                    <span className="text-sm text-foreground group-hover:text-green-500 group-hover:font-semibold transition-all">{item.projeto}</span>
+                    <span className="text-sm font-bold text-green-500 group-hover:scale-110 transition-transform">{item.percentual}%</span>
                   </div>
                 ))}
               </div>
 
               {/* Coluna Atenção */}
-              <div className="bg-card/30 border border-orange-500/30 rounded-xl p-5 space-y-3">
+              <div className="bg-gradient-to-br from-orange-500/5 to-orange-500/10 border-2 border-orange-500/30 rounded-xl p-6 space-y-3 hover:border-orange-500/50 hover:shadow-lg hover:shadow-orange-500/20 transition-all duration-300">
                 <div className="flex items-center gap-2 mb-4">
-                  <AlertCircle className="w-5 h-5 text-orange-500" />
-                  <h3 className="text-lg font-semibold text-orange-500">Atenção (50-79%)</h3>
+                  <div className="p-2 bg-orange-500/20 rounded-lg">
+                    <AlertCircle className="w-6 h-6 text-orange-500" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-orange-500">Atenção</h3>
+                    <p className="text-xs text-orange-500/70">(50-79%)</p>
+                  </div>
                 </div>
                 {conformidadeAtencao.map((item, idx) => (
-                  <div key={idx} className="flex items-center justify-between py-2 border-b border-border/30 last:border-0">
-                    <span className="text-sm text-foreground">{item.projeto}</span>
-                    <span className="text-sm font-bold text-orange-500">{item.percentual}%</span>
+                  <div key={idx} className="group flex items-center justify-between py-2.5 px-3 rounded-lg border border-border/20 bg-card/30 hover:bg-orange-500/10 hover:border-orange-500/40 transition-all duration-200 cursor-pointer">
+                    <span className="text-sm text-foreground group-hover:text-orange-500 group-hover:font-semibold transition-all">{item.projeto}</span>
+                    <span className="text-sm font-bold text-orange-500 group-hover:scale-110 transition-transform">{item.percentual}%</span>
                   </div>
                 ))}
               </div>
 
               {/* Coluna Críticos */}
-              <div className="bg-card/30 border border-red-500/30 rounded-xl p-5 space-y-3">
+              <div className="bg-gradient-to-br from-red-500/5 to-red-500/10 border-2 border-red-500/30 rounded-xl p-6 space-y-3 hover:border-red-500/50 hover:shadow-lg hover:shadow-red-500/20 transition-all duration-300">
                 <div className="flex items-center gap-2 mb-4">
-                  <XCircle className="w-5 h-5 text-red-500" />
-                  <h3 className="text-lg font-semibold text-red-500">Críticos (&lt;50%)</h3>
+                  <div className="p-2 bg-red-500/20 rounded-lg">
+                    <XCircle className="w-6 h-6 text-red-500" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-red-500">Críticos</h3>
+                    <p className="text-xs text-red-500/70">(&lt;50%)</p>
+                  </div>
                 </div>
                 {conformidadeCriticos.map((item, idx) => (
-                  <div key={idx} className="flex items-center justify-between py-2 border-b border-border/30 last:border-0">
-                    <span className="text-sm text-foreground">{item.projeto}</span>
-                    <span className="text-sm font-bold text-red-500">{item.percentual}%</span>
+                  <div key={idx} className="group flex items-center justify-between py-2.5 px-3 rounded-lg border border-border/20 bg-card/30 hover:bg-red-500/10 hover:border-red-500/40 transition-all duration-200 cursor-pointer">
+                    <span className="text-sm text-foreground group-hover:text-red-500 group-hover:font-semibold transition-all">{item.projeto}</span>
+                    <span className="text-sm font-bold text-red-500 group-hover:scale-110 transition-transform">{item.percentual}%</span>
                   </div>
                 ))}
-              </div>
-            </div>
-
-            {/* Gráfico de Rosca - Conformidade */}
-            <div className="bg-card/30 border border-border/50 rounded-xl p-6">
-              <div className="flex flex-col lg:flex-row items-center justify-around gap-8">
-                <div className="w-full lg:w-1/2">
-                  <ResponsiveContainer width="100%" height={300}>
-                    <PieChart>
-                      <Pie
-                        data={conformidadeChartData}
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={80}
-                        outerRadius={120}
-                        paddingAngle={2}
-                        dataKey="value"
-                      >
-                        {conformidadeChartData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
-                        ))}
-                      </Pie>
-                      <text x="50%" y="50%" textAnchor="middle" dominantBaseline="middle" className="fill-foreground text-4xl font-bold">
-                        16
-                      </text>
-                      <text x="50%" y="58%" textAnchor="middle" dominantBaseline="middle" className="fill-muted-foreground text-sm">
-                        Projetos
-                      </text>
-                    </PieChart>
-                  </ResponsiveContainer>
-                </div>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between gap-8">
-                    <span className="text-foreground font-medium">Excelentes</span>
-                    <span className="text-2xl font-bold text-green-500">43,75%</span>
-                  </div>
-                  <div className="flex items-center justify-between gap-8">
-                    <span className="text-foreground font-medium">Atenção</span>
-                    <span className="text-2xl font-bold text-orange-500">31,25%</span>
-                  </div>
-                  <div className="flex items-center justify-between gap-8">
-                    <span className="text-foreground font-medium">Críticos</span>
-                    <span className="text-2xl font-bold text-red-500">25,00%</span>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -303,95 +259,64 @@ export default function Rankings() {
             
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Coluna Excelente */}
-              <div className="bg-card/30 border border-green-500/30 rounded-xl p-5 space-y-3">
+              <div className="bg-gradient-to-br from-green-500/5 to-green-500/10 border-2 border-green-500/30 rounded-xl p-6 space-y-3 hover:border-green-500/50 hover:shadow-lg hover:shadow-green-500/20 transition-all duration-300">
                 <div className="flex items-center gap-2 mb-4">
-                  <CheckCircle className="w-5 h-5 text-green-500" />
-                  <h3 className="text-lg font-semibold text-green-500">Excelente (≤15%) - 10 projetos</h3>
+                  <div className="p-2 bg-green-500/20 rounded-lg">
+                    <CheckCircle className="w-6 h-6 text-green-500" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-green-500">Excelente</h3>
+                    <p className="text-xs text-green-500/70">(≤15%) - 10 projetos</p>
+                  </div>
                 </div>
-                <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                <div className="grid grid-cols-1 gap-2">
                   {retrabalhoExcelentes.map((item, idx) => (
-                    <div key={idx} className="flex items-center justify-between py-1.5 border-b border-border/20 last:border-0">
-                      <span className="text-xs text-foreground">{item.projeto}</span>
-                      <span className="text-xs font-bold text-green-500">{item.percentual}%</span>
+                    <div key={idx} className="group flex items-center justify-between py-2 px-3 rounded-lg border border-border/20 bg-card/30 hover:bg-green-500/10 hover:border-green-500/40 transition-all duration-200 cursor-pointer">
+                      <span className="text-xs text-foreground group-hover:text-green-500 group-hover:font-semibold transition-all">{item.projeto}</span>
+                      <span className="text-xs font-bold text-green-500 group-hover:scale-110 transition-transform">{item.percentual}%</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Coluna Atenção */}
-              <div className="bg-card/30 border border-orange-500/30 rounded-xl p-5 space-y-3">
+              <div className="bg-gradient-to-br from-orange-500/5 to-orange-500/10 border-2 border-orange-500/30 rounded-xl p-6 space-y-3 hover:border-orange-500/50 hover:shadow-lg hover:shadow-orange-500/20 transition-all duration-300">
                 <div className="flex items-center gap-2 mb-4">
-                  <AlertCircle className="w-5 h-5 text-orange-500" />
-                  <h3 className="text-lg font-semibold text-orange-500">Atenção (15-30%) - 4 projetos</h3>
+                  <div className="p-2 bg-orange-500/20 rounded-lg">
+                    <AlertCircle className="w-6 h-6 text-orange-500" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-orange-500">Atenção</h3>
+                    <p className="text-xs text-orange-500/70">(15-30%) - 4 projetos</p>
+                  </div>
                 </div>
-                <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                <div className="grid grid-cols-1 gap-2">
                   {retrabalhoAtencao.map((item, idx) => (
-                    <div key={idx} className="flex items-center justify-between py-1.5 border-b border-border/20 last:border-0">
-                      <span className="text-xs text-foreground">{item.projeto}</span>
-                      <span className="text-xs font-bold text-orange-500">{item.percentual}%</span>
+                    <div key={idx} className="group flex items-center justify-between py-2 px-3 rounded-lg border border-border/20 bg-card/30 hover:bg-orange-500/10 hover:border-orange-500/40 transition-all duration-200 cursor-pointer">
+                      <span className="text-xs text-foreground group-hover:text-orange-500 group-hover:font-semibold transition-all">{item.projeto}</span>
+                      <span className="text-xs font-bold text-orange-500 group-hover:scale-110 transition-transform">{item.percentual}%</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Coluna Crítico */}
-              <div className="bg-card/30 border border-red-500/30 rounded-xl p-5 space-y-3">
+              <div className="bg-gradient-to-br from-red-500/5 to-red-500/10 border-2 border-red-500/30 rounded-xl p-6 space-y-3 hover:border-red-500/50 hover:shadow-lg hover:shadow-red-500/20 transition-all duration-300">
                 <div className="flex items-center gap-2 mb-4">
-                  <XCircle className="w-5 h-5 text-red-500" />
-                  <h3 className="text-lg font-semibold text-red-500">Crítico (&gt;30%) - 2 projetos</h3>
+                  <div className="p-2 bg-red-500/20 rounded-lg">
+                    <XCircle className="w-6 h-6 text-red-500" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-red-500">Crítico</h3>
+                    <p className="text-xs text-red-500/70">(&gt;30%) - 2 projetos</p>
+                  </div>
                 </div>
                 {retrabalhoCriticos.map((item, idx) => (
-                  <div key={idx} className="flex items-center justify-between py-2 border-b border-border/30 last:border-0">
-                    <span className="text-sm text-foreground">{item.projeto}</span>
-                    <span className="text-sm font-bold text-red-500">{item.percentual}%</span>
+                  <div key={idx} className="group flex items-center justify-between py-2.5 px-3 rounded-lg border border-border/20 bg-card/30 hover:bg-red-500/10 hover:border-red-500/40 transition-all duration-200 cursor-pointer">
+                    <span className="text-sm text-foreground group-hover:text-red-500 group-hover:font-semibold transition-all">{item.projeto}</span>
+                    <span className="text-sm font-bold text-red-500 group-hover:scale-110 transition-transform">{item.percentual}%</span>
                   </div>
                 ))}
-              </div>
-            </div>
-
-            {/* Gráfico de Rosca - Retrabalho */}
-            <div className="bg-card/30 border border-border/50 rounded-xl p-6">
-              <div className="flex flex-col lg:flex-row items-center justify-around gap-8">
-                <div className="w-full lg:w-1/2">
-                  <ResponsiveContainer width="100%" height={300}>
-                    <PieChart>
-                      <Pie
-                        data={retrabalhoChartData}
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={80}
-                        outerRadius={120}
-                        paddingAngle={2}
-                        dataKey="value"
-                      >
-                        {retrabalhoChartData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
-                        ))}
-                      </Pie>
-                      <text x="50%" y="48%" textAnchor="middle" dominantBaseline="middle" className="fill-muted-foreground text-sm">
-                        Média
-                      </text>
-                      <text x="50%" y="56%" textAnchor="middle" dominantBaseline="middle" className="fill-foreground text-4xl font-bold">
-                        12,5%
-                      </text>
-                    </PieChart>
-                  </ResponsiveContainer>
-                </div>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between gap-8">
-                    <span className="text-foreground font-medium">Excelente</span>
-                    <span className="text-2xl font-bold text-green-500">62,5%</span>
-                  </div>
-                  <div className="flex items-center justify-between gap-8">
-                    <span className="text-foreground font-medium">Atenção</span>
-                    <span className="text-2xl font-bold text-orange-500">25,0%</span>
-                  </div>
-                  <div className="flex items-center justify-between gap-8">
-                    <span className="text-foreground font-medium">Crítico</span>
-                    <span className="text-2xl font-bold text-red-500">12,5%</span>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
