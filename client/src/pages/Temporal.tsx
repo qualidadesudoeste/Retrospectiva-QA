@@ -62,24 +62,43 @@ export default function Temporal() {
     });
   }, [ciclosPorProjeto]);
 
-  // Transformar dados para formato agrupado (cada projeto vira uma linha)
-  const ciclosPorProjetoAgrupado = useMemo(() => {
+  // Transformar dados para gráficos individuais por projeto
+  const dadosPorProjeto = useMemo(() => {
     if (ciclosPorProjeto.length === 0) return [];
     
     const projetos = Object.keys(ciclosPorProjeto[0]).filter(k => k !== 'Mes');
-    const resultado: any[] = [];
     
-    projetos.forEach(projeto => {
-      const dadosProjeto: any = { projeto };
-      ciclosPorProjeto.forEach(mes => {
-        const valor = mes[projeto];
-        dadosProjeto[mes.Mes] = valor === 0 || valor === '0' ? null : valor;
-      });
-      resultado.push(dadosProjeto);
-    });
-    
-    return resultado;
+    return projetos.map(projeto => ({
+      nome: projeto,
+      dados: ciclosPorProjeto.map(mes => ({
+        mes: mes.Mes,
+        ciclos: mes[projeto] === 0 || mes[projeto] === '0' ? null : mes[projeto]
+      })),
+      cor: getCorProjeto(projeto)
+    }));
   }, [ciclosPorProjeto]);
+
+  // Função para obter cor do projeto
+  const getCorProjeto = (projeto: string) => {
+    const cores: Record<string, string> = {
+      'SEMGE-CONTRATOS': '#3b82f6',
+      'CMS-FOLHA DE PAGAMENTO': '#8b5cf6',
+      'CODECON-FISCALIZAÇÃO': '#ec4899',
+      'SEDUR-LICENCIAMENTO': '#10b981',
+      'SEDUR-FISCALIZAÇÃO': '#f59e0b',
+      'LIVE-SIGSUAS': '#06b6d4',
+      'SEMPRE-SIGSUAS': '#6366f1',
+      'SEFAZ-CONTRATOS': '#84cc16',
+      'SEFAZ-FROTAS': '#eab308',
+      'SEFAZ-GESTÃO DE PROJETOS': '#0ea5e9',
+      'SEFAZ-RHWEB': '#d946ef',
+      'SEFAZ-AGENDAMENTO': '#f43f5e',
+      'SEDUR-CONTRATOS': '#14b8a6',
+      'SMED-ALIMENTAÇÃO': '#fb923c',
+      'SEDUR-SAUSE': '#38bdf8'
+    };
+    return cores[projeto] || '#888';
+  };
 
   // Filtrar dados da tabela
   const dadosFiltrados = useMemo(() => {
@@ -159,62 +178,56 @@ export default function Temporal() {
       <div className="space-y-6">
         {/* Gráficos */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <Card className="border-border shadow-lg lg:col-span-2">
-            <CardHeader>
-              <CardTitle className="text-lg font-bold text-foreground">Evolução Mensal de Ciclos por Projeto</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={400}>
-                <BarChart data={ciclosPorProjetoProcessado}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                  <XAxis 
-                    dataKey="Mes" 
-                    stroke="#888" 
-                    tick={{ fontSize: 12 }}
-                  />
-                  <YAxis 
-                    stroke="#888" 
-                    tick={{ fontSize: 12 }}
-                    label={{ value: 'Ciclos', angle: -90, position: 'insideLeft', style: { fill: '#888' } }}
-                  />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: 'rgba(31, 41, 55, 0.95)', 
-                      border: '1px solid rgba(75, 85, 99, 0.5)', 
-                      borderRadius: '12px',
-                      padding: '12px 16px',
-                      boxShadow: '0 10px 25px rgba(0, 0, 0, 0.5)'
-                    }}
-                    labelStyle={{ color: '#fff', fontWeight: '600', fontSize: '14px', marginBottom: '8px' }}
-                    itemStyle={{ fontSize: '13px' }}
-                    cursor={{ fill: 'rgba(59, 130, 246, 0.1)' }}
-                  />
-                  <Legend 
-                    wrapperStyle={{ fontSize: '11px' }}
-                    iconType="rect"
-                    iconSize={10}
-                  />
-                  {/* Barras empilhadas para cada projeto - cores distintas */}
-                  {/* Valores 0 são convertidos em null para não renderizar barras vazias */}
-                  <Bar dataKey="SEMGE-CONTRATOS" stackId="a" fill="#3b82f6" />
-                  <Bar dataKey="CMS-FOLHA DE PAGAMENTO" stackId="a" fill="#8b5cf6" />
-                  <Bar dataKey="CODECON-FISCALIZAÇÃO" stackId="a" fill="#ec4899" />
-                  <Bar dataKey="SEDUR-LICENCIAMENTO" stackId="a" fill="#10b981" />
-                  <Bar dataKey="SEDUR-FISCALIZAÇÃO" stackId="a" fill="#f59e0b" />
-                  <Bar dataKey="LIVE-SIGSUAS" stackId="a" fill="#06b6d4" />
-                  <Bar dataKey="SEMPRE-SIGSUAS" stackId="a" fill="#6366f1" />
-                  <Bar dataKey="SEFAZ-CONTRATOS" stackId="a" fill="#84cc16" />
-                  <Bar dataKey="SEFAZ-FROTAS" stackId="a" fill="#eab308" />
-                  <Bar dataKey="SEFAZ-GESTÃO DE PROJETOS" stackId="a" fill="#0ea5e9" />
-                  <Bar dataKey="SEFAZ-RHWEB" stackId="a" fill="#d946ef" />
-                  <Bar dataKey="SEFAZ-AGENDAMENTO" stackId="a" fill="#f43f5e" />
-                  <Bar dataKey="SEDUR-CONTRATOS" stackId="a" fill="#14b8a6" />
-                  <Bar dataKey="SMED-ALIMENTAÇÃO" stackId="a" fill="#fb923c" />
-                  <Bar dataKey="SEDUR-SAUSE" stackId="a" fill="#38bdf8" />
-                </BarChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
+          {/* Título da seção */}
+          <div className="lg:col-span-2">
+            <h2 className="text-2xl font-bold text-foreground mb-4">Evolução Mensal de Ciclos por Projeto</h2>
+          </div>
+
+          {/* Grid de gráficos individuais por projeto */}
+          {dadosPorProjeto.map((projeto) => (
+            <Card key={projeto.nome} className="border-border shadow-lg">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-bold text-foreground">{projeto.nome}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={150}>
+                  <LineChart data={projeto.dados}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#333" opacity={0.3} />
+                    <XAxis 
+                      dataKey="mes" 
+                      stroke="#888" 
+                      tick={{ fontSize: 10 }}
+                      height={30}
+                    />
+                    <YAxis 
+                      stroke="#888" 
+                      tick={{ fontSize: 10 }}
+                      width={30}
+                    />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: 'rgba(31, 41, 55, 0.95)', 
+                        border: `2px solid ${projeto.cor}`, 
+                        borderRadius: '8px',
+                        padding: '8px 12px'
+                      }}
+                      labelStyle={{ color: '#fff', fontWeight: '600', fontSize: '12px' }}
+                      itemStyle={{ fontSize: '12px' }}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="ciclos" 
+                      stroke={projeto.cor}
+                      strokeWidth={2.5}
+                      dot={{ fill: projeto.cor, r: 4 }}
+                      activeDot={{ r: 6 }}
+                      connectNulls={false}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+          ))}
 
           <Card className="border-border shadow-lg">
             <CardHeader>
