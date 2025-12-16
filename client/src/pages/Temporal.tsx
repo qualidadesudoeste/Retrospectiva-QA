@@ -18,17 +18,23 @@ interface DadosNovembro {
   total_ciclos: number;
 }
 
+interface CiclosPorProjeto {
+  Mes: string;
+  [projeto: string]: string | number;
+}
+
 export default function Temporal() {
   const { data: mensalData, loading: mensalLoading } = useCSVData<AnaliseMensal>('/analise_mensal.csv');
   const { data: progressaoData, loading: progressaoLoading } = useCSVData<ProgressaoAcumulada>('/progressao_acumulada.csv');
   const { data: mensalClienteData, loading: mensalClienteLoading } = useCSVData<AnaliseMensalCliente>('/analise_mensal_cliente.csv');
   const { data: dadosNovembro, loading: novembroLoading } = useCSVData<DadosNovembro>('/analise_mensal_novembro.csv');
+  const { data: ciclosPorProjeto, loading: ciclosProjetoLoading } = useCSVData<CiclosPorProjeto>('/ciclos_por_projeto_mes.csv');
 
   const [searchTerm, setSearchTerm] = useState('');
   const [filterRetrabalho, setFilterRetrabalho] = useState<string | null>(null);
   const [isTableExpanded, setIsTableExpanded] = useState(false);
 
-  const isLoading = mensalLoading || progressaoLoading || mensalClienteLoading || novembroLoading;
+  const isLoading = mensalLoading || progressaoLoading || mensalClienteLoading || novembroLoading || ciclosProjetoLoading;
 
   // Preparar dados para gráfico de evolução mensal (excluindo dezembro)
   const evolucaoMensal = useMemo(() => {
@@ -120,34 +126,68 @@ export default function Temporal() {
       <div className="space-y-6">
         {/* Gráficos */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <Card className="border-border shadow-lg">
+          <Card className="border-border shadow-lg lg:col-span-2">
             <CardHeader>
-              <CardTitle className="text-lg font-bold text-foreground">Evolução Mensal de Ciclos</CardTitle>
+              <CardTitle className="text-lg font-bold text-foreground">Evolução Mensal de Ciclos por Projeto</CardTitle>
+              <p className="text-sm text-muted-foreground mt-2">Distribuição detalhada de ciclos de teste por projeto ao longo dos meses</p>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <AreaChart data={evolucaoMensal}>
-                  <defs>
-                    <linearGradient id="colorCiclos" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
+              <ResponsiveContainer width="100%" height={400}>
+                <BarChart data={ciclosPorProjeto}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                  <XAxis dataKey="mes" stroke="#888" />
-                  <YAxis stroke="#888" />
+                  <XAxis 
+                    dataKey="Mes" 
+                    stroke="#888" 
+                    tick={{ fontSize: 12 }}
+                  />
+                  <YAxis 
+                    stroke="#888" 
+                    tick={{ fontSize: 12 }}
+                    label={{ value: 'Ciclos', angle: -90, position: 'insideLeft', style: { fill: '#888' } }}
+                  />
                   <Tooltip 
-                    contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #374151', borderRadius: '8px' }}
-                    labelStyle={{ color: '#fff' }}
+                    contentStyle={{ 
+                      backgroundColor: 'rgba(31, 41, 55, 0.95)', 
+                      border: '1px solid rgba(75, 85, 99, 0.5)', 
+                      borderRadius: '12px',
+                      padding: '12px 16px',
+                      boxShadow: '0 10px 25px rgba(0, 0, 0, 0.5)'
+                    }}
+                    labelStyle={{ color: '#fff', fontWeight: '600', fontSize: '14px', marginBottom: '8px' }}
+                    itemStyle={{ fontSize: '13px' }}
+                    cursor={{ fill: 'rgba(59, 130, 246, 0.1)' }}
                   />
-                  <Area 
-                    type="monotone" 
-                    dataKey="ciclos" 
-                    stroke="#3b82f6" 
-                    strokeWidth={3}
-                    fill="url(#colorCiclos)"
+                  <Legend 
+                    wrapperStyle={{ fontSize: '11px' }}
+                    iconType="rect"
+                    iconSize={10}
                   />
-                </AreaChart>
+                  {/* Barras empilhadas para cada projeto - cores distintas */}
+                  <Bar dataKey="SEMGE-SIGC" stackId="a" fill="#3b82f6" />
+                  <Bar dataKey="FPG-CMS-MAKER5" stackId="a" fill="#8b5cf6" />
+                  <Bar dataKey="CODECON" stackId="a" fill="#ec4899" />
+                  <Bar dataKey="SEDUR-CLE" stackId="a" fill="#10b981" />
+                  <Bar dataKey="SEDUR-FISCALIZAÇÃO" stackId="a" fill="#f59e0b" />
+                  <Bar dataKey="SIGSUAS-LIVE" stackId="a" fill="#06b6d4" />
+                  <Bar dataKey="SIGSUAS-VIDA-NOVA" stackId="a" fill="#6366f1" />
+                  <Bar dataKey="SEMED-SIE" stackId="a" fill="#ef4444" />
+                  <Bar dataKey="PRODEB-SICAF" stackId="a" fill="#14b8a6" />
+                  <Bar dataKey="PRODEB-SIGC" stackId="a" fill="#f97316" />
+                  <Bar dataKey="SALVADOR-FILM" stackId="a" fill="#a855f7" />
+                  <Bar dataKey="CONTRATOS-SEFAZ" stackId="a" fill="#84cc16" />
+                  <Bar dataKey="EDUCAÇÃO-LIVE" stackId="a" fill="#22c55e" />
+                  <Bar dataKey="FROTAS-SEFAZ" stackId="a" fill="#eab308" />
+                  <Bar dataKey="GPS-PROJETOS" stackId="a" fill="#0ea5e9" />
+                  <Bar dataKey="SEFAZ-RHWEB" stackId="a" fill="#d946ef" />
+                  <Bar dataKey="SEFAZ-AGENDAMENTO" stackId="a" fill="#f43f5e" />
+                  <Bar dataKey="SISTEMA-CONTRATOS-SEDUR" stackId="a" fill="#8b5cf6" />
+                  <Bar dataKey="SMED-MAE" stackId="a" fill="#fb923c" />
+                  <Bar dataKey="PMFSA-SIGP" stackId="a" fill="#4ade80" />
+                  <Bar dataKey="SEDUR-SAUSE" stackId="a" fill="#38bdf8" />
+                  <Bar dataKey="SEMIT-SGTIC" stackId="a" fill="#c084fc" />
+                  <Bar dataKey="SEMOP-SGCI" stackId="a" fill="#fbbf24" />
+                  <Bar dataKey="SIGP-SSA" stackId="a" fill="#34d399" />
+                </BarChart>
               </ResponsiveContainer>
             </CardContent>
           </Card>

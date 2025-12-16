@@ -1,0 +1,70 @@
+DADOS EXTRAÍDOS DO PDF - CICLOS DE TESTE POR PROJETO 2025
+
+PROJETOS IDENTIFICADOS E SEUS CICLOS:
+
+1. CODECON - SISTEMA DE FISCALIZAÇÃO E
+   - Versões: 1.0.0, 10.0.0, 2.0.0, 3.0.0, 4.0.0, 5.0.0, 6.0.0, 7.0.0, 8.0.0, 9.0.0
+   - Ciclos: Maioria com 2 ciclos, algumas versões com 3 ciclos
+   - Período: Janeiro a Outubro 2025
+
+2. CONTRATOS - SEFAZ
+   - Versões: 2.0.2, 2.0.3, 2.0.4, 3.0.0-APO, 3.0.1-APO 2, Sustentação
+   - Ciclos: 2-4 ciclos por versão
+   - Período: Março a Novembro 2025
+
+3. EDUCAÇÃO LIVE
+   - Sprints: 1, 2, 3, 4 (Diário.C), 5, 6 (Diário)
+   - Ciclos: 1-2 ciclos por sprint
+   - Período: Maio a Outubro 2025
+
+4. FPG_CMS_MAKER5
+   - Versões: 1.0.0, 2.0.0, 3.0.1, 4.0.0, 5.0.0, 6.0.0
+   - Ciclos: 2-6 ciclos (versão 2.0.0 teve 6 ciclos, 3.0.1 teve 6 ciclos)
+   - Período: Agosto a Outubro 2025
+
+5. FROTAS - SEFAZ
+   - Versões: 0.0, 1.0-Mobile, 2.0, 3.0, 4.0 MB-Motorista
+   - Ciclos: 1-4 ciclos
+   - Período: Fevereiro a Agosto 2025
+
+6. GPS - Sistema de Gestão de Projetos
+   - Versões: 1.0.0-Projetos, 2.0.0-Cronog+Finan, 3.0.0-Eventos, 4.0.0
+   - Ciclos: 2-4 ciclos
+   - Período: Junho a Dezembro 2025
+
+7. PMFSA - SIGP
+   - Versões: 11.0.0-ESO, 12.0.0-ESO, 12.0.0-FPG, 13.0.0-ESO, 13.0.0-FPG, 14.0.0-ESO, 14.0.0-FPG
+   - Ciclos: 1 ciclo cada (RE-TESTE)
+   - Período: Fevereiro a Outubro 2025
+
+8. PRODEB - SICAF
+   - Versões: 19.0.0 a 27.0.0
+   - Ciclos: 2-6 ciclos (versão 19.0.0 teve 6 ciclos)
+   - Período: Janeiro a Julho 2025
+
+9. PRODEB - SIGC
+   - Sprints: 10, 11, 12, 13, 14
+   - Ciclos: 1-3 ciclos
+   - Período: Maio a Agosto 2025
+
+10. SALVADOR FILM COMMISSION
+    - Versões: 6.2.0, 6.2.1, 6.2.2, 7.0.0
+    - Ciclos: 2-5 ciclos (versão 6.2.2 teve 5 ciclos)
+    - Período: Janeiro a Julho 2025
+
+11. SEDUR - CLE
+    - Versões: 21.0.0 INTERNA a 36.0.0
+    - Ciclos: 1-3 ciclos
+    - Período: Janeiro a Novembro 2025
+
+12. SEDUR - FISCALIZAÇÃO E MONITORAMENTO
+    - Sprints: 10, 11, 12, 13, 14
+    - Ciclos: 2-3 ciclos
+    - Período: Setembro a Novembro 2025
+
+OBSERVAÇÕES:
+- Projetos com mais ciclos indicam maior retrabalho
+- FPG_CMS_MAKER5 versão 2.0.0 e 3.0.1 tiveram 6 ciclos cada
+- PRODEB-SICAF versão 19.0.0 teve 6 ciclos
+- SALVADOR FILM COMMISSION versão 6.2.2 teve 5 ciclos
+- Dados cobrem período de Janeiro a Novembro 2025
