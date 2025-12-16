@@ -409,10 +409,10 @@ export default function Temporal() {
           <CardHeader>
             <CardTitle className="text-base font-bold text-foreground">Filtros de Classificação</CardTitle>
           </CardHeader>
-          <CardContent className="grid grid-cols-2 md:grid-cols-5 gap-2">
+          <CardContent className="grid grid-cols-1 md:grid-cols-5 gap-3">
             <button
               onClick={() => { setSearchTerm(''); setFilterClassificacao(null); setIsTableExpanded(true); }}
-              className="p-3 bg-background/50 border border-border/40 rounded-lg hover:border-primary/30 hover:bg-background/70 transition-all duration-200 text-left flex items-center justify-between"
+              className="p-4 bg-background/50 border border-border/40 rounded-lg hover:border-primary/30 hover:bg-background/70 transition-all duration-200 text-left flex flex-col gap-2"
             >
               <span className="text-sm font-medium text-foreground">Todos</span>
               <span className="text-lg font-bold text-foreground">{stats?.totalProjetos}</span>
@@ -420,7 +420,7 @@ export default function Temporal() {
 
             <button
               onClick={() => { setFilterClassificacao('Excelente'); setIsTableExpanded(true); }}
-              className="p-3 bg-primary/5 border border-primary/30 rounded-lg hover:border-primary hover:bg-primary/10 transition-all duration-200 text-left flex items-center justify-between"
+              className="p-4 bg-primary/5 border border-primary/30 rounded-lg hover:border-primary hover:bg-primary/10 transition-all duration-200 text-left flex flex-col gap-2"
             >
               <span className="text-sm font-medium text-primary">Excelentes</span>
               <span className="text-lg font-bold text-primary">{stats?.excelentes}</span>
@@ -428,7 +428,7 @@ export default function Temporal() {
 
             <button
               onClick={() => { setFilterClassificacao('Bom'); setIsTableExpanded(true); }}
-              className="p-3 bg-blue-500/5 border border-blue-500/30 rounded-lg hover:border-blue-500 hover:bg-blue-500/10 transition-all duration-200 text-left flex items-center justify-between"
+              className="p-4 bg-blue-500/5 border border-blue-500/30 rounded-lg hover:border-blue-500 hover:bg-blue-500/10 transition-all duration-200 text-left flex flex-col gap-2"
             >
               <span className="text-sm font-medium text-blue-400">Bons</span>
               <span className="text-lg font-bold text-blue-400">{stats?.bons}</span>
@@ -436,7 +436,7 @@ export default function Temporal() {
 
             <button
               onClick={() => { setFilterClassificacao('Regular'); setIsTableExpanded(true); }}
-              className="p-3 bg-yellow-500/5 border border-yellow-500/30 rounded-lg hover:border-yellow-500 hover:bg-yellow-500/10 transition-all duration-200 text-left flex items-center justify-between"
+              className="p-4 bg-yellow-500/5 border border-yellow-500/30 rounded-lg hover:border-yellow-500 hover:bg-yellow-500/10 transition-all duration-200 text-left flex flex-col gap-2"
             >
               <span className="text-sm font-medium text-yellow-400">Regulares</span>
               <span className="text-lg font-bold text-yellow-400">{stats?.regulares}</span>
@@ -444,7 +444,7 @@ export default function Temporal() {
 
             <button
               onClick={() => { setFilterClassificacao('Crítico'); setIsTableExpanded(true); }}
-              className="p-3 bg-red-500/5 border border-red-500/30 rounded-lg hover:border-red-500 hover:bg-red-500/10 transition-all duration-200 text-left flex items-center justify-between"
+              className="p-4 bg-red-500/5 border border-red-500/30 rounded-lg hover:border-red-500 hover:bg-red-500/10 transition-all duration-200 text-left flex flex-col gap-2"
             >
               <span className="text-sm font-medium text-red-400">Críticos</span>
               <span className="text-lg font-bold text-red-400">{stats?.criticos}</span>
