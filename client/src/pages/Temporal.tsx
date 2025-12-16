@@ -23,19 +23,27 @@ interface CiclosPorProjeto {
   [projeto: string]: string | number;
 }
 
+interface CiclosPorSprint {
+  Projeto: string;
+  Sprint: string;
+  Mes: string;
+  Ciclos: number;
+}
+
 export default function Temporal() {
   const { data: mensalData, loading: mensalLoading } = useCSVData<AnaliseMensal>('/analise_mensal.csv');
   const { data: progressaoData, loading: progressaoLoading } = useCSVData<ProgressaoAcumulada>('/progressao_acumulada.csv');
   const { data: mensalClienteData, loading: mensalClienteLoading } = useCSVData<AnaliseMensalCliente>('/analise_mensal_cliente.csv');
   const { data: dadosNovembro, loading: novembroLoading } = useCSVData<DadosNovembro>('/analise_mensal_novembro.csv');
   const { data: ciclosPorProjeto, loading: ciclosProjetoLoading } = useCSVData<CiclosPorProjeto>('/ciclos_por_projeto_mes.csv');
+  const { data: ciclosPorSprint, loading: ciclosSprintLoading } = useCSVData<CiclosPorSprint>('/ciclos_por_sprint.csv');
 
   const [searchTerm, setSearchTerm] = useState('');
   const [filterRetrabalho, setFilterRetrabalho] = useState<string | null>(null);
   const [isTableExpanded, setIsTableExpanded] = useState(false);
   const [viewMode, setViewMode] = useState<'mensal' | 'sprint'>('mensal');
 
-  const isLoading = mensalLoading || progressaoLoading || mensalClienteLoading || novembroLoading || ciclosProjetoLoading;
+  const isLoading = mensalLoading || progressaoLoading || mensalClienteLoading || novembroLoading || ciclosProjetoLoading || ciclosSprintLoading;
 
   // Preparar dados para gráfico de evolução mensal (excluindo dezembro)
   const evolucaoMensal = useMemo(() => {
@@ -101,38 +109,30 @@ export default function Temporal() {
     }));
   }, [ciclosPorProjeto]);
 
-  // Transformar dados para visualização por sprint (mais detalhada)
+  // Transformar dados para visualização por sprint (dados reais do CSV)
   const dadosPorProjetoSprint = useMemo(() => {
-    if (ciclosPorProjeto.length === 0) return [];
+    if (ciclosPorSprint.length === 0) return [];
     
-    const projetos = Object.keys(ciclosPorProjeto[0]).filter(k => k !== 'Mes');
+    // Agrupar sprints por projeto
+    const projetoMap = new Map<string, Array<{sprint: string, ciclos: number}>>(); 
     
-    return projetos.map(projeto => {
-      // Expandir cada mês em sprints individuais baseado no número de ciclos
-      const dadosExpandidos: Array<{sprint: string, ciclos: number | null}> = [];
-      let sprintCounter = 1;
-      
-      ciclosPorProjeto.forEach(mes => {
-        const ciclos = Number(mes[projeto]);
-        if (ciclos > 0) {
-          // Criar um ponto para cada ciclo
-          for (let i = 0; i < ciclos; i++) {
-            dadosExpandidos.push({
-              sprint: `S${sprintCounter}`,
-              ciclos: 1
-            });
-            sprintCounter++;
-          }
-        }
+    ciclosPorSprint.forEach(item => {
+      if (!projetoMap.has(item.Projeto)) {
+        projetoMap.set(item.Projeto, []);
+      }
+      projetoMap.get(item.Projeto)!.push({
+        sprint: item.Sprint,
+        ciclos: Number(item.Ciclos)
       });
-      
-      return {
-        nome: projeto,
-        dados: dadosExpandidos,
-        cor: getCorProjeto(projeto)
-      };
     });
-  }, [ciclosPorProjeto]);
+    
+    // Converter para formato do gráfico
+    return Array.from(projetoMap.entries()).map(([projeto, sprints]) => ({
+      nome: projeto,
+      dados: sprints,
+      cor: getCorProjeto(projeto)
+    }));
+  }, [ciclosPorSprint]);
 
   // Filtrar dados da tabela
   const dadosFiltrados = useMemo(() => {
