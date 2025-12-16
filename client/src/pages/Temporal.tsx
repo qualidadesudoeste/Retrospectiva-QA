@@ -409,7 +409,7 @@ export default function Temporal() {
           <CardHeader>
             <CardTitle className="text-base font-bold text-foreground">Filtros de Classificação</CardTitle>
           </CardHeader>
-          <CardContent className="grid grid-cols-1 md:grid-cols-5 gap-3">
+          <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <button
               onClick={() => { setSearchTerm(''); setFilterClassificacao(null); setIsTableExpanded(true); }}
               className="p-4 bg-background/50 border border-border/40 rounded-lg hover:border-primary/30 hover:bg-background/70 transition-all duration-200 text-left flex flex-col gap-2"
