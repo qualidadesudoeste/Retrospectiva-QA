@@ -1,0 +1,21 @@
+DIAGNÓSTICO DO PROBLEMA - TRANSALVADOR-SINALIZAÇÃO
+
+VISUALIZAÇÃO POR SPRINT:
+❌ O gráfico mostra apenas "(1 sprints)" no título
+❌ Mostra apenas 1 ponto no gráfico: "10.0.0 PWA"
+❌ Faltam 3 sprints: 9.0.0, 11.0.0 e 12.0.0
+
+DADOS NO CSV:
+✓ TRANSALVADOR-SINALIZAÇÃO,10.0.0 PWA,Novembro,1
+✓ TRANSALVADOR-SINALIZAÇÃO,11.0.0,Outubro,3
+✓ TRANSALVADOR-SINALIZAÇÃO,12.0.0,Novembro,2
+✓ TRANSALVADOR-SINALIZAÇÃO,9.0.0,Setembro,5
+
+PROBLEMA IDENTIFICADO:
+O CSV tem 4 sprints, mas o gráfico está mostrando apenas 1.
+
+POSSÍVEL CAUSA:
+O código pode estar filtrando ou não carregando corretamente todas as linhas de TRANSALVADOR do CSV.
+
+SOLUÇÃO:
+Verificar se há algum problema de encoding, espaços extras ou formato no CSV que está impedindo o carregamento correto das 4 sprints.

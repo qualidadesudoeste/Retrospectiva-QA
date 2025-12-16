@@ -1,0 +1,12 @@
+OBSERVAÇÃO DO GRÁFICO DE TRANSALVADOR-SINALIZAÇÃO
+
+VISUALIZAÇÃO MENSAL:
+✓ O gráfico está aparecendo corretamente
+✓ Mostra 3 pontos: Setembro, Outubro e Novembro
+✓ Valores parecem corretos (5, 3, 3)
+
+PROBLEMA IDENTIFICADO:
+O gráfico está mostrando apenas a visualização MENSAL.
+Preciso clicar no botão "Visualização por Sprint" para verificar se os dados por sprint estão aparecendo.
+
+O gráfico mensal está funcionando perfeitamente, mostrando os 3 meses com dados de TRANSALVADOR.
