@@ -2,9 +2,9 @@ import { useMemo, useState } from 'react';
 import DashboardLayout from '@/components/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useCSVData } from '@/hooks/useCSVData';
-import { AnaliseMensal, ProgressaoAcumulada, AnaliseMensalCliente } from '@/types/data';
+import { AnaliseMensal, ProgressaoAcumulada, AnaliseMensalCliente, MetricasQualidadeProjeto } from '@/types/data';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, AreaChart, ComposedChart } from 'recharts';
-import { Calendar, TrendingUp, TrendingDown, Activity, Zap, ChevronDown, ChevronUp, Search } from 'lucide-react';
+import { Calendar, TrendingUp, TrendingDown, Activity, Zap, ChevronDown, ChevronUp, Search, Target, Award, CheckCircle, AlertCircle, AlertTriangle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
 interface DadosNovembro {
@@ -37,13 +37,15 @@ export default function Temporal() {
   const { data: dadosNovembro, loading: novembroLoading } = useCSVData<DadosNovembro>('/analise_mensal_novembro.csv');
   const { data: ciclosPorProjeto, loading: ciclosProjetoLoading } = useCSVData<CiclosPorProjeto>('/ciclos_por_projeto_mes.csv');
   const { data: ciclosPorSprint, loading: ciclosSprintLoading } = useCSVData<CiclosPorSprint>('/ciclos_por_sprint.csv');
+  const { data: metricasData, loading: metricasLoading } = useCSVData<MetricasQualidadeProjeto>('/metricas_qualidade_projeto.csv');
 
   const [searchTerm, setSearchTerm] = useState('');
   const [filterRetrabalho, setFilterRetrabalho] = useState<string | null>(null);
+  const [filterClassificacao, setFilterClassificacao] = useState<string | null>(null);
   const [isTableExpanded, setIsTableExpanded] = useState(false);
   const [viewMode, setViewMode] = useState<'mensal' | 'sprint'>('mensal');
 
-  const isLoading = mensalLoading || progressaoLoading || mensalClienteLoading || novembroLoading || ciclosProjetoLoading || ciclosSprintLoading;
+  const isLoading = mensalLoading || progressaoLoading || mensalClienteLoading || novembroLoading || ciclosProjetoLoading || ciclosSprintLoading || metricasLoading;
 
   // Preparar dados para gráfico de evolução mensal (excluindo dezembro)
   const evolucaoMensal = useMemo(() => {
@@ -164,37 +166,87 @@ export default function Temporal() {
     return resultado;
   }, [ciclosPorSprint]);
 
-  // Filtrar dados da tabela
-  const dadosFiltrados = useMemo(() => {
-    let filtered = evolucaoMensal;
+  // Filtrar projetos e remover duplicatas
+  const projetosFiltrados = useMemo(() => {
+    let filtered = metricasData;
     
     if (searchTerm) {
-      filtered = filtered.filter(m => 
-        m.mes.toLowerCase().includes(searchTerm.toLowerCase())
+      filtered = filtered.filter(p => 
+        p.Projeto.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        p.Cliente.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
     
-    if (filterRetrabalho) {
-      filtered = filtered.filter(m => {
-        if (filterRetrabalho === 'Excelente') return m.retrabalho < 15;
-        if (filterRetrabalho === 'Bom') return m.retrabalho >= 15 && m.retrabalho < 25;
-        if (filterRetrabalho === 'Alto') return m.retrabalho >= 25;
-        return true;
-      });
+    if (filterClassificacao) {
+      filtered = filtered.filter(p => p.Classificacao === filterClassificacao);
     }
     
-    return filtered;
-  }, [evolucaoMensal, searchTerm, filterRetrabalho]);
+    // Remover duplicatas baseado em Cliente + Projeto
+    const uniqueProjects = new Map();
+    filtered.forEach(projeto => {
+      const key = `${projeto.Cliente}-${projeto.Projeto}`;
+      if (!uniqueProjects.has(key)) {
+        uniqueProjects.set(key, projeto);
+      }
+    });
+    
+    return Array.from(uniqueProjects.values());
+  }, [metricasData, searchTerm, filterClassificacao]);
 
-  // Estatísticas para filtros
+  // Estatísticas para filtros de projetos
   const stats = useMemo(() => {
+    if (metricasData.length === 0) return null;
+    
+    // Remover duplicatas para estatísticas
+    const uniqueProjects = new Map();
+    metricasData.forEach(projeto => {
+      const key = `${projeto.Cliente}-${projeto.Projeto}`;
+      if (!uniqueProjects.has(key)) {
+        uniqueProjects.set(key, projeto);
+      }
+    });
+    const uniqueData = Array.from(uniqueProjects.values());
+    
     return {
-      total: evolucaoMensal.length,
-      excelente: evolucaoMensal.filter(m => m.retrabalho < 15).length,
-      bom: evolucaoMensal.filter(m => m.retrabalho >= 15 && m.retrabalho < 25).length,
-      alto: evolucaoMensal.filter(m => m.retrabalho >= 25).length
+      totalProjetos: uniqueData.length,
+      excelentes: uniqueData.filter(p => p.Classificacao === 'Excelente').length,
+      bons: uniqueData.filter(p => p.Classificacao === 'Bom').length,
+      regulares: uniqueData.filter(p => p.Classificacao === 'Regular').length,
+      criticos: uniqueData.filter(p => p.Classificacao === 'Crítico').length,
+      scoreMedia: (uniqueData.reduce((sum, p) => sum + p.ScoreQualidade, 0) / uniqueData.length).toFixed(1),
+      retrabalhoMedio: (uniqueData.reduce((sum, p) => sum + p.MediaRetrabalho, 0) / uniqueData.length).toFixed(1)
     };
-  }, [evolucaoMensal]);
+  }, [metricasData]);
+
+  const getClassificacaoColor = (classificacao: string) => {
+    switch (classificacao) {
+      case 'Excelente':
+        return 'bg-primary/10 text-primary border-primary/30';
+      case 'Bom':
+        return 'bg-blue-500/10 text-blue-400 border-blue-500/30';
+      case 'Regular':
+        return 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30';
+      case 'Crítico':
+        return 'bg-red-500/10 text-red-400 border-red-500/30';
+      default:
+        return 'bg-muted/10 text-foreground border-border';
+    }
+  };
+
+  const getClassificacaoIcon = (classificacao: string) => {
+    switch (classificacao) {
+      case 'Excelente':
+        return <Award className="w-4 h-4" />;
+      case 'Bom':
+        return <CheckCircle className="w-4 h-4" />;
+      case 'Regular':
+        return <AlertCircle className="w-4 h-4" />;
+      case 'Crítico':
+        return <AlertTriangle className="w-4 h-4" />;
+      default:
+        return <Target className="w-4 h-4" />;
+    }
+  };
 
   // Calcular tendências
   const tendencias = useMemo(() => {
@@ -348,42 +400,50 @@ export default function Temporal() {
             </CardContent>
           </Card>
 
-          {/* Filtros Rápidos */}
+          {/* Filtros Rápidos de Projetos */}
           <Card className="bg-card/40 backdrop-blur-sm border-border/40">
           <CardHeader>
-            <CardTitle className="text-base font-bold text-foreground">Filtros de Retrabalho</CardTitle>
+            <CardTitle className="text-base font-bold text-foreground">Filtros de Classificação</CardTitle>
           </CardHeader>
-          <CardContent className="grid grid-cols-2 gap-3">
+          <CardContent className="grid grid-cols-2 md:grid-cols-5 gap-2">
             <button
-              onClick={() => { setSearchTerm(''); setFilterRetrabalho(null); setIsTableExpanded(true); }}
-              className="p-4 bg-background/50 border border-border/40 rounded-lg hover:border-primary/30 hover:bg-background/70 transition-all duration-200 text-left flex flex-col gap-2"
+              onClick={() => { setSearchTerm(''); setFilterClassificacao(null); setIsTableExpanded(true); }}
+              className="p-3 bg-background/50 border border-border/40 rounded-lg hover:border-primary/30 hover:bg-background/70 transition-all duration-200 text-left flex items-center justify-between"
             >
               <span className="text-sm font-medium text-foreground">Todos</span>
-              <span className="text-lg font-bold text-foreground">{stats.total}</span>
+              <span className="text-lg font-bold text-foreground">{stats?.totalProjetos}</span>
             </button>
 
             <button
-              onClick={() => { setFilterRetrabalho('Excelente'); setIsTableExpanded(true); }}
-              className="p-4 bg-green-500/5 border border-green-500/30 rounded-lg hover:border-green-500 hover:bg-green-500/10 transition-all duration-200 text-left flex flex-col gap-2"
+              onClick={() => { setFilterClassificacao('Excelente'); setIsTableExpanded(true); }}
+              className="p-3 bg-primary/5 border border-primary/30 rounded-lg hover:border-primary hover:bg-primary/10 transition-all duration-200 text-left flex items-center justify-between"
             >
-              <span className="text-sm font-medium text-green-400">Excelente (&lt;15%)</span>
-              <span className="text-lg font-bold text-green-400">{stats.excelente}</span>
+              <span className="text-sm font-medium text-primary">Excelentes</span>
+              <span className="text-lg font-bold text-primary">{stats?.excelentes}</span>
             </button>
 
             <button
-              onClick={() => { setFilterRetrabalho('Bom'); setIsTableExpanded(true); }}
-              className="p-4 bg-yellow-500/5 border border-yellow-500/30 rounded-lg hover:border-yellow-500 hover:bg-yellow-500/10 transition-all duration-200 text-left flex flex-col gap-2"
+              onClick={() => { setFilterClassificacao('Bom'); setIsTableExpanded(true); }}
+              className="p-3 bg-blue-500/5 border border-blue-500/30 rounded-lg hover:border-blue-500 hover:bg-blue-500/10 transition-all duration-200 text-left flex items-center justify-between"
             >
-              <span className="text-sm font-medium text-yellow-400">Bom (15-25%)</span>
-              <span className="text-lg font-bold text-yellow-400">{stats.bom}</span>
+              <span className="text-sm font-medium text-blue-400">Bons</span>
+              <span className="text-lg font-bold text-blue-400">{stats?.bons}</span>
             </button>
 
             <button
-              onClick={() => { setFilterRetrabalho('Alto'); setIsTableExpanded(true); }}
-              className="p-4 bg-red-500/5 border border-red-500/30 rounded-lg hover:border-red-500 hover:bg-red-500/10 transition-all duration-200 text-left flex flex-col gap-2"
+              onClick={() => { setFilterClassificacao('Regular'); setIsTableExpanded(true); }}
+              className="p-3 bg-yellow-500/5 border border-yellow-500/30 rounded-lg hover:border-yellow-500 hover:bg-yellow-500/10 transition-all duration-200 text-left flex items-center justify-between"
             >
-              <span className="text-sm font-medium text-red-400">Alto (&gt;25%)</span>
-              <span className="text-lg font-bold text-red-400">{stats.alto}</span>
+              <span className="text-sm font-medium text-yellow-400">Regulares</span>
+              <span className="text-lg font-bold text-yellow-400">{stats?.regulares}</span>
+            </button>
+
+            <button
+              onClick={() => { setFilterClassificacao('Crítico'); setIsTableExpanded(true); }}
+              className="p-3 bg-red-500/5 border border-red-500/30 rounded-lg hover:border-red-500 hover:bg-red-500/10 transition-all duration-200 text-left flex items-center justify-between"
+            >
+              <span className="text-sm font-medium text-red-400">Críticos</span>
+              <span className="text-lg font-bold text-red-400">{stats?.criticos}</span>
             </button>
           </CardContent>
         </Card>
@@ -396,7 +456,7 @@ export default function Temporal() {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
                 type="text"
-                placeholder="Buscar mês..."
+                placeholder="Buscar projeto ou cliente..."
                 value={searchTerm}
                 onChange={(e) => { setSearchTerm(e.target.value); if (e.target.value) setIsTableExpanded(true); }}
                 className="pl-10 h-10 bg-card/40 backdrop-blur-sm border-border/40 focus:border-primary/50 transition-all"
@@ -420,67 +480,60 @@ export default function Temporal() {
             </button>
           </div>
 
-          {/* Tabela Detalhada */}
+          {/* Tabela de Projetos */}
           {isTableExpanded && (
-            <Card className="border-border/40 shadow-lg">
-              
-              <CardContent className="p-0">
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="bg-muted/10 border-b border-border/20">
-                        <th className="text-left py-4 px-6 font-semibold text-muted-foreground text-xs uppercase tracking-wide">Mês</th>
-                        <th className="text-center py-4 px-4 font-semibold text-muted-foreground text-xs uppercase tracking-wide">Ciclos</th>
-                        <th className="text-center py-4 px-4 font-semibold text-muted-foreground text-xs uppercase tracking-wide">Retrabalho</th>
-                        <th className="text-center py-4 px-4 font-semibold text-muted-foreground text-xs uppercase tracking-wide">Corretivas</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {dadosFiltrados.map((mes, index) => (
-                        <tr 
-                          key={index} 
-                          className="border-b border-border/10 hover:bg-card/60 transition-all duration-200 group"
-                        >
-                          <td className="py-4 px-6">
-                            <div className="flex items-center gap-2">
-                              <div className="w-1.5 h-1.5 rounded-full bg-primary/60 group-hover:bg-primary group-hover:scale-125 transition-all duration-200"></div>
-                              <span className="font-medium text-foreground text-sm group-hover:text-primary transition-colors duration-200">{mes.mes}</span>
+            <div className="bg-card/40 backdrop-blur-sm border border-border/40 rounded-lg overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-border/40">
+                      <th className="text-left p-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Projeto</th>
+                      <th className="text-left p-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Classificação</th>
+                      <th className="text-center p-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Retrabalho</th>
+                      <th className="text-center p-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Duração Média</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {projetosFiltrados.map((projeto, index) => (
+                      <tr key={index} className="border-b border-border/20 hover:bg-primary/5 transition-colors duration-200 cursor-pointer">
+                        <td className="p-3">
+                          <div className="flex items-center gap-2">
+                            <div className={`p-1.5 rounded-md ${getClassificacaoColor(projeto.Classificacao)}`}>
+                              {getClassificacaoIcon(projeto.Classificacao)}
                             </div>
-                          </td>
-                          <td className="py-4 px-4 text-center">
-                            <span className="inline-flex items-center justify-center min-w-[3rem] px-3 py-1.5 rounded-lg bg-primary/10 text-primary font-semibold text-sm border border-primary/20 group-hover:bg-primary/15 group-hover:border-primary/30 transition-all duration-200">
-                              {mes.ciclos}
-                            </span>
-                          </td>
-                          <td className="py-4 px-4 text-center">
-                            <span className={`inline-flex items-center justify-center min-w-[4rem] px-3 py-1.5 rounded-lg text-sm font-semibold transition-all duration-200 ${
-                              mes.retrabalho < 15 ? 'bg-green-500/10 text-green-400 border border-green-500/20 group-hover:bg-green-500/15 group-hover:border-green-500/30' :
-                              mes.retrabalho < 25 ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 group-hover:bg-yellow-500/15 group-hover:border-yellow-500/30' :
-                              'bg-red-500/10 text-red-400 border border-red-500/20 group-hover:bg-red-500/15 group-hover:border-red-500/30'
-                            }`}>
-                              {mes.retrabalho.toFixed(1)}%
-                            </span>
-                          </td>
-                          <td className="py-4 px-4 text-center">
-                            <span className="inline-flex items-center justify-center min-w-[3rem] px-3 py-1.5 rounded-lg bg-red-500/10 text-red-400 font-semibold text-sm border border-red-500/20 group-hover:bg-red-500/15 group-hover:border-red-500/30 transition-all duration-200">
-                              {mes.corretivas}
-                            </span>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                            <div>
+                              <div className="font-semibold text-sm text-foreground">{projeto.Cliente}</div>
+                              <div className="text-xs text-muted-foreground">{projeto.Projeto}</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="p-3">
+                          <span className={`inline-block px-2 py-1 rounded-md text-xs font-semibold border ${getClassificacaoColor(projeto.Classificacao)}`}>
+                            {projeto.Classificacao}
+                          </span>
+                        </td>
+                        <td className="p-3 text-center">
+                          <span className="text-sm font-semibold text-foreground">{projeto.MediaRetrabalho?.toFixed(1) || '0.0'}%</span>
+                        </td>
+                        <td className="p-3 text-center">
+                          <span className="text-sm font-semibold text-foreground">
+                            {projeto.NumCiclos && projeto.DuracaoDias ? (projeto.DuracaoDias / projeto.NumCiclos).toFixed(1) : '0'} dias
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
 
-                {dadosFiltrados.length === 0 && (
-                  <div className="p-12 text-center">
-                    <Search className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                    <p className="text-lg text-muted-foreground">Nenhum mês encontrado</p>
-                    <p className="text-sm text-muted-foreground mt-2">Tente ajustar os filtros ou a busca</p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+              {projetosFiltrados.length === 0 && (
+                <div className="p-12 text-center">
+                  <Search className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                  <p className="text-lg text-muted-foreground">Nenhum projeto encontrado</p>
+                  <p className="text-sm text-muted-foreground mt-2">Tente ajustar os filtros ou a busca</p>
+                </div>
+              )}
+            </div>
           )}
         </div>
       </div>

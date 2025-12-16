@@ -89,7 +89,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           <NavLink href="/" icon={BarChart3} collapsed={collapsed}>Visão Geral</NavLink>
           <NavLink href="/temporal" icon={Calendar} collapsed={collapsed}>Análise Anual</NavLink>
           <NavLink href="/rankings" icon={Trophy} collapsed={collapsed}>Ranking</NavLink>
-          <NavLink href="/projetos" icon={FolderKanban} collapsed={collapsed}>Projetos</NavLink>
           <NavLink href="/evolucao" icon={TrendingUp} collapsed={collapsed}>Evolução</NavLink>
         </nav>
         

@@ -8,7 +8,7 @@ import { FilterProvider } from "./contexts/FilterContext";
 import Home from "./pages/Home";
 import Temporal from "./pages/Temporal";
 import Rankings from "./pages/Rankings";
-import Projetos from "./pages/Projetos";
+
 import Evolucao from "./pages/Evolucao";
 
 function Router() {
@@ -17,7 +17,7 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path={"/temporal"} component={Temporal} />
       <Route path={"/rankings"} component={Rankings} />
-      <Route path={"/projetos"} component={Projetos} />
+
       <Route path={"/evolucao"} component={Evolucao} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
