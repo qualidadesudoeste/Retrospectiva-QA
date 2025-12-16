@@ -62,22 +62,6 @@ export default function Temporal() {
     });
   }, [ciclosPorProjeto]);
 
-  // Transformar dados para gráficos individuais por projeto
-  const dadosPorProjeto = useMemo(() => {
-    if (ciclosPorProjeto.length === 0) return [];
-    
-    const projetos = Object.keys(ciclosPorProjeto[0]).filter(k => k !== 'Mes');
-    
-    return projetos.map(projeto => ({
-      nome: projeto,
-      dados: ciclosPorProjeto.map(mes => ({
-        mes: mes.Mes,
-        ciclos: mes[projeto] === 0 || mes[projeto] === '0' ? null : mes[projeto]
-      })),
-      cor: getCorProjeto(projeto)
-    }));
-  }, [ciclosPorProjeto]);
-
   // Função para obter cor do projeto
   const getCorProjeto = (projeto: string) => {
     const cores: Record<string, string> = {
@@ -99,6 +83,22 @@ export default function Temporal() {
     };
     return cores[projeto] || '#888';
   };
+
+  // Transformar dados para gráficos individuais por projeto
+  const dadosPorProjeto = useMemo(() => {
+    if (ciclosPorProjeto.length === 0) return [];
+    
+    const projetos = Object.keys(ciclosPorProjeto[0]).filter(k => k !== 'Mes');
+    
+    return projetos.map(projeto => ({
+      nome: projeto,
+      dados: ciclosPorProjeto.map(mes => ({
+        mes: mes.Mes,
+        ciclos: mes[projeto] === 0 || mes[projeto] === '0' ? null : mes[projeto]
+      })),
+      cor: getCorProjeto(projeto)
+    }));
+  }, [ciclosPorProjeto]);
 
   // Filtrar dados da tabela
   const dadosFiltrados = useMemo(() => {

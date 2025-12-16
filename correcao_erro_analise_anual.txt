@@ -1,0 +1,37 @@
+CORREÇÃO DO ERRO NA PÁGINA ANÁLISE ANUAL
+
+✅ ERRO CORRIGIDO COM SUCESSO!
+
+PROBLEMA IDENTIFICADO:
+- ReferenceError: Cannot access 'getCorProjeto' before initialization
+- A função getCorProjeto estava sendo chamada dentro do useMemo antes de ser declarada
+- Linha 77: cor: getCorProjeto(projeto) - chamada da função
+- Linha 82-101: Declaração da função getCorProjeto
+
+SOLUÇÃO APLICADA:
+- Movida a declaração da função getCorProjeto para ANTES do useMemo
+- Agora a função é declarada nas linhas 65-85
+- O useMemo que usa a função está nas linhas 87-101
+
+RESULTADO:
+- Página Análise Anual carregando corretamente
+- Gráficos individuais de linha por projeto exibindo perfeitamente
+- 15 gráficos visíveis com cores distintas
+- Sem erros no console
+
+GRÁFICOS EXIBIDOS:
+1. CODECON-FISCALIZAÇÃO (rosa)
+2. SEFAZ-CONTRATOS (lima)
+3. CMS-FOLHA DE PAGAMENTO (roxo)
+4. SEFAZ-FROTAS (amarelo)
+5. SEFAZ-GESTÃO DE PROJETOS (azul claro)
+6. SEDUR-LICENCIAMENTO (verde)
+7. SEDUR-FISCALIZAÇÃO (laranja)
+8. SEDUR-SAUSE (azul céu)
+9. SEFAZ-AGENDAMENTO (rosa escuro)
+10. SEFAZ-RHWEB (magenta)
+11. SEMGE-CONTRATOS (azul)
+12. LIVE-SIGSUAS (ciano)
+13. SEMPRE-SIGSUAS (índigo)
+14. SEDUR-CONTRATOS (teal)
+15. SMED-ALIMENTAÇÃO (laranja claro)
