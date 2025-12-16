@@ -33,6 +33,7 @@ export default function Temporal() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterRetrabalho, setFilterRetrabalho] = useState<string | null>(null);
   const [isTableExpanded, setIsTableExpanded] = useState(false);
+  const [viewMode, setViewMode] = useState<'mensal' | 'sprint'>('mensal');
 
   const isLoading = mensalLoading || progressaoLoading || mensalClienteLoading || novembroLoading || ciclosProjetoLoading;
 
@@ -84,7 +85,7 @@ export default function Temporal() {
     return cores[projeto] || '#888';
   };
 
-  // Transformar dados para gráficos individuais por projeto
+  // Transformar dados para gráficos individuais por projeto (mensal)
   const dadosPorProjeto = useMemo(() => {
     if (ciclosPorProjeto.length === 0) return [];
     
@@ -98,6 +99,39 @@ export default function Temporal() {
       })),
       cor: getCorProjeto(projeto)
     }));
+  }, [ciclosPorProjeto]);
+
+  // Transformar dados para visualização por sprint (mais detalhada)
+  const dadosPorProjetoSprint = useMemo(() => {
+    if (ciclosPorProjeto.length === 0) return [];
+    
+    const projetos = Object.keys(ciclosPorProjeto[0]).filter(k => k !== 'Mes');
+    
+    return projetos.map(projeto => {
+      // Expandir cada mês em sprints individuais baseado no número de ciclos
+      const dadosExpandidos: Array<{sprint: string, ciclos: number | null}> = [];
+      let sprintCounter = 1;
+      
+      ciclosPorProjeto.forEach(mes => {
+        const ciclos = Number(mes[projeto]);
+        if (ciclos > 0) {
+          // Criar um ponto para cada ciclo
+          for (let i = 0; i < ciclos; i++) {
+            dadosExpandidos.push({
+              sprint: `S${sprintCounter}`,
+              ciclos: 1
+            });
+            sprintCounter++;
+          }
+        }
+      });
+      
+      return {
+        nome: projeto,
+        dados: dadosExpandidos,
+        cor: getCorProjeto(projeto)
+      };
+    });
   }, [ciclosPorProjeto]);
 
   // Filtrar dados da tabela
@@ -176,23 +210,55 @@ export default function Temporal() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
+        {/* Toggle de Visualização */}
+        <div className="flex justify-center">
+          <div className="inline-flex rounded-lg border border-border bg-background p-1">
+            <button
+              onClick={() => setViewMode('mensal')}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                viewMode === 'mensal'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              Visualização Mensal
+            </button>
+            <button
+              onClick={() => setViewMode('sprint')}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                viewMode === 'sprint'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              Visualização por Sprint
+            </button>
+          </div>
+        </div>
+
         {/* Gráficos */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Grid de gráficos individuais por projeto */}
-          {dadosPorProjeto.map((projeto) => (
+          {(viewMode === 'mensal' ? dadosPorProjeto : dadosPorProjetoSprint).map((projeto) => (
             <Card key={projeto.nome} className="border-border shadow-lg">
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-bold text-foreground">{projeto.nome}</CardTitle>
+                <CardTitle className="text-sm font-bold text-foreground">
+                  {projeto.nome}
+                  {viewMode === 'sprint' && projeto.dados.length > 0 && (
+                    <span className="ml-2 text-xs text-muted-foreground">({projeto.dados.length} sprints)</span>
+                  )}
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={150}>
                   <LineChart data={projeto.dados}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#333" opacity={0.3} />
                     <XAxis 
-                      dataKey="mes" 
+                      dataKey={viewMode === 'mensal' ? 'mes' : 'sprint'}
                       stroke="#888" 
                       tick={{ fontSize: 10 }}
                       height={30}
+                      interval={viewMode === 'sprint' ? 'preserveStartEnd' : 0}
                     />
                     <YAxis 
                       stroke="#888" 
