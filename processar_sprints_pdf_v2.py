@@ -40,6 +40,8 @@ def mapear_projeto(texto_projeto):
         return 'LIVE-SIGSUAS'
     elif 'SEMPRE' in texto_projeto and 'SIGSUAS' in texto_projeto:
         return 'SEMPRE-SIGSUAS'
+    elif 'VIDA' in texto_projeto and 'NOVA' in texto_projeto:
+        return 'SEMPRE-SIGSUAS'
     elif 'SEDUR' in texto_projeto and 'CONTRATOS' in texto_projeto:
         return 'SEDUR-CONTRATOS'
     elif 'SMED' in texto_projeto and ('MAE' in texto_projeto or 'ALIMENTAÇÃO' in texto_projeto):
