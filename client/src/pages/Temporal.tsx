@@ -419,26 +419,7 @@ export default function Temporal() {
               <span className="text-2xl font-bold text-foreground">{stats?.totalProjetos}</span>
             </button>
 
-            {/* Linha 2: Regulares e Críticos */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <button
-                onClick={() => { setFilterClassificacao('Regular'); setIsTableExpanded(true); }}
-                className="p-4 bg-yellow-500/5 border border-yellow-500/30 rounded-lg hover:border-yellow-500 hover:bg-yellow-500/10 transition-all duration-200 text-left flex flex-col gap-2"
-              >
-                <span className="text-sm font-medium text-yellow-400">Regulares</span>
-                <span className="text-2xl font-bold text-yellow-400">{stats?.regulares}</span>
-              </button>
-
-              <button
-                onClick={() => { setFilterClassificacao('Crítico'); setIsTableExpanded(true); }}
-                className="p-4 bg-red-500/5 border border-red-500/30 rounded-lg hover:border-red-500 hover:bg-red-500/10 transition-all duration-200 text-left flex flex-col gap-2"
-              >
-                <span className="text-sm font-medium text-red-400">Críticos</span>
-                <span className="text-2xl font-bold text-red-400">{stats?.criticos}</span>
-              </button>
-            </div>
-
-            {/* Linha 3: Excelentes e Bons */}
+            {/* Linha 2: Excelentes e Bons */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <button
                 onClick={() => { setFilterClassificacao('Excelente'); setIsTableExpanded(true); }}
@@ -454,6 +435,25 @@ export default function Temporal() {
               >
                 <span className="text-sm font-medium text-blue-400">Bons</span>
                 <span className="text-2xl font-bold text-blue-400">{stats?.bons}</span>
+              </button>
+            </div>
+
+            {/* Linha 3: Regulares e Críticos */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <button
+                onClick={() => { setFilterClassificacao('Regular'); setIsTableExpanded(true); }}
+                className="p-4 bg-yellow-500/5 border border-yellow-500/30 rounded-lg hover:border-yellow-500 hover:bg-yellow-500/10 transition-all duration-200 text-left flex flex-col gap-2"
+              >
+                <span className="text-sm font-medium text-yellow-400">Regulares</span>
+                <span className="text-2xl font-bold text-yellow-400">{stats?.regulares}</span>
+              </button>
+
+              <button
+                onClick={() => { setFilterClassificacao('Crítico'); setIsTableExpanded(true); }}
+                className="p-4 bg-red-500/5 border border-red-500/30 rounded-lg hover:border-red-500 hover:bg-red-500/10 transition-all duration-200 text-left flex flex-col gap-2"
+              >
+                <span className="text-sm font-medium text-red-400">Críticos</span>
+                <span className="text-2xl font-bold text-red-400">{stats?.criticos}</span>
               </button>
             </div>
           </CardContent>
