@@ -113,6 +113,25 @@ export default function Temporal() {
   const dadosPorProjetoSprint = useMemo(() => {
     if (ciclosPorSprint.length === 0) return [];
     
+    // Ordem dos projetos (mesma ordem da visualização mensal)
+    const ordemProjetos = [
+      'CODECON-FISCALIZAÇÃO',
+      'SEFAZ-CONTRATOS',
+      'CMS-FOLHA DE PAGAMENTO',
+      'SEFAZ-FROTAS',
+      'SEFAZ-GESTÃO DE PROJETOS',
+      'SEDUR-LICENCIAMENTO',
+      'SEDUR-FISCALIZAÇÃO',
+      'SEDUR-SAUSE',
+      'SEFAZ-AGENDAMENTO',
+      'SEFAZ-RHWEB',
+      'SEMGE-CONTRATOS',
+      'LIVE-SIGSUAS',
+      'SEMPRE-SIGSUAS',
+      'SEDUR-CONTRATOS',
+      'SMED-ALIMENTAÇÃO'
+    ];
+    
     // Agrupar sprints por projeto
     const projetoMap = new Map<string, Array<{sprint: string, ciclos: number}>>(); 
     
@@ -126,12 +145,21 @@ export default function Temporal() {
       });
     });
     
-    // Converter para formato do gráfico
-    return Array.from(projetoMap.entries()).map(([projeto, sprints]) => ({
+    // Converter para formato do gráfico e ordenar conforme ordem definida
+    const resultado = Array.from(projetoMap.entries()).map(([projeto, sprints]) => ({
       nome: projeto,
       dados: sprints,
       cor: getCorProjeto(projeto)
     }));
+    
+    // Ordenar baseado na ordem definida
+    resultado.sort((a, b) => {
+      const indexA = ordemProjetos.indexOf(a.nome);
+      const indexB = ordemProjetos.indexOf(b.nome);
+      return indexA - indexB;
+    });
+    
+    return resultado;
   }, [ciclosPorSprint]);
 
   // Filtrar dados da tabela
