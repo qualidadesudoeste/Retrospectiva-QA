@@ -18,6 +18,13 @@ interface RankingEficiencia {
   score_eficiencia: number;
 }
 
+interface Sprint0Bugs {
+  cliente: string;
+  projeto: string;
+  sprint: string;
+  duracao: number;
+}
+
 export default function Rankings() {
   const [rankings, setRankings] = useState<RankingEficiencia[]>([]);
   const [loading, setLoading] = useState(true);
@@ -120,6 +127,63 @@ export default function Rankings() {
     );
   };
 
+  const render0BugsCard = (item: Sprint0Bugs) => {
+    return (
+      <div className="relative bg-card/40 backdrop-blur-sm border border-border/40 rounded-xl p-5 shadow-lg hover:shadow-xl hover:border-primary/40 transition-all duration-300 hover:scale-[1.01]">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4 w-full">
+            <div>
+              {/* Cliente e Projeto */}
+              <div className="flex items-center gap-2 mb-1">
+                <Trophy className="w-4 h-4 text-yellow-500" />
+                <span className="text-xl font-bold text-foreground">{item.cliente}</span>
+              </div>
+              <div className="text-xs text-muted-foreground font-medium mb-3">{item.projeto}</div>
+              
+              {/* Badges de informação */}
+              <div className="flex items-center gap-2 flex-wrap">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span className="px-2.5 py-1 bg-primary/5 text-primary/80 rounded-md text-xs font-semibold border border-primary/20 cursor-help hover:bg-primary/10 transition-colors">
+                      Sprint {item.sprint}
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Versão da Sprint</p>
+                  </TooltipContent>
+                </Tooltip>
+                
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span className="px-2.5 py-1 bg-blue-500/5 text-blue-600/80 rounded-md text-xs font-semibold flex items-center gap-1.5 border border-blue-500/20 cursor-help hover:bg-blue-500/10 transition-colors">
+                      <Clock className="w-3 h-3" />
+                      {item.duracao}d
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Duração da Sprint</p>
+                  </TooltipContent>
+                </Tooltip>
+                
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span className="px-2.5 py-1 bg-green-500/5 text-green-600/80 rounded-md text-xs font-semibold flex items-center gap-1.5 border border-green-500/20 cursor-help hover:bg-green-500/10 transition-colors">
+                      <Bug className="w-3 h-3" />
+                      0
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Bugs da Sprint</p>
+                  </TooltipContent>
+                </Tooltip>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   // Dados para Ranking por Conformidade - Maker Express
   const conformidadeExcelentes = [
     { projeto: "SEMPRE - SIGSUAS", percentual: 82.35 },
@@ -146,23 +210,30 @@ export default function Rankings() {
     { projeto: "SMED - Gestão Pessoas", percentual: 29.41 },
   ];
 
+  // Dados para Sprints com 0 Bugs
+  const sprints0Bugs: Sprint0Bugs[] = [
+    { cliente: "SEMGE", projeto: "CONTRATOS", sprint: "32.0.0", duracao: 14 },
+    { cliente: "SEMOB", projeto: "SYSMOBI", sprint: "26.2.0", duracao: 14 },
+    { cliente: "SEMOB", projeto: "SYSMOBI", sprint: "28.0.0", duracao: 14 },
+    { cliente: "SEMOB", projeto: "SYSMOBI", sprint: "37.0.0", duracao: 14 },
+    { cliente: "CODECON", projeto: "FISCALIZAÇÃO", sprint: "7.0.0", duracao: 14 },
+    { cliente: "CODECON", projeto: "FISCALIZAÇÃO", sprint: "10.0.0", duracao: 14 },
+    { cliente: "SEDUR", projeto: "LICENCIAMENTO", sprint: "36.0.0", duracao: 14 },
+    { cliente: "SEDUR", projeto: "CONTRATOS", sprint: "6.0.0", duracao: 14 },
+    { cliente: "SMED", projeto: "ALIMENTAÇÃO", sprint: "6", duracao: 14 },
+    { cliente: "SEMED", projeto: "SIE CORURIPE", sprint: "26", duracao: 14 },
+    { cliente: "SEMPRE", projeto: "SIGSUAS", sprint: "16.0.0", duracao: 14 },
+  ];
+
   return (
     <TooltipProvider>
       <DashboardLayout>
         <div className="space-y-8">
-          {/* Ranking Completo Original */}
-          <div className="space-y-3">
-            {rankings.slice(0, 5).map((item, idx) => (
-              <div key={idx}>
-                {renderPodiumCard(item, idx + 1)}
-              </div>
-            ))}
-          </div>
-
+          
           {/* Ranking por Conformidade - Maker Express */}
           <div className="space-y-4">
             <h2 className="text-2xl font-bold text-foreground border-b border-border/50 pb-3">
-              Ranking por Conformidade – Maker Express
+              Conformidade Maker Express
             </h2>
             
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -223,6 +294,31 @@ export default function Rankings() {
                 ))}
               </div>
             </div>
+          </div>
+
+          {/* Aceite no 1º Ciclo - Sprints com 0 Bugs */}
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold text-foreground border-b border-border/50 pb-3 flex items-center gap-2">
+              <Trophy className="w-6 h-6 text-yellow-500" />
+              Aceite no 1º Ciclo
+            </h2>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {sprints0Bugs.map((item, idx) => (
+                <div key={idx}>
+                  {render0BugsCard(item)}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Ranking Completo Original */}
+          <div className="space-y-3">
+            {rankings.slice(0, 5).map((item, idx) => (
+              <div key={idx}>
+                {renderPodiumCard(item, idx + 1)}
+              </div>
+            ))}
           </div>
 
         </div>

@@ -88,7 +88,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <nav className="flex-1 p-4 space-y-2">
           <NavLink href="/" icon={BarChart3} collapsed={collapsed}>Visão Geral</NavLink>
           <NavLink href="/temporal" icon={Calendar} collapsed={collapsed}>Análise Anual</NavLink>
-          <NavLink href="/rankings" icon={Trophy} collapsed={collapsed}>Ranking</NavLink>
+          <NavLink href="/rankings" icon={Trophy} collapsed={collapsed}>Rankings</NavLink>
           <NavLink href="/evolucao" icon={TrendingUp} collapsed={collapsed}>Evolução</NavLink>
         </nav>
         
