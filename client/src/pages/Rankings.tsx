@@ -50,12 +50,12 @@ export default function Rankings() {
   const renderPodiumCard = (item: RankingEficiencia, position: number) => {
     const getHoverColor = (pos: number) => {
       switch(pos) {
-        case 1: return 'hover:bg-yellow-500/10 hover:border-yellow-500/40';
-        case 2: return 'hover:bg-slate-400/10 hover:border-slate-400/40';
-        case 3: return 'hover:bg-orange-600/10 hover:border-orange-600/40';
-        case 4: return 'hover:bg-blue-500/10 hover:border-blue-500/40';
-        case 5: return 'hover:bg-purple-500/10 hover:border-purple-500/40';
-        default: return 'hover:bg-primary/5 hover:border-primary/30';
+        case 1: return 'hover:border-yellow-500/40';
+        case 2: return 'hover:border-slate-400/40';
+        case 3: return 'hover:border-orange-600/40';
+        case 4: return 'hover:border-blue-500/40';
+        case 5: return 'hover:border-purple-500/40';
+        default: return 'hover:border-primary/30';
       }
     };
     
