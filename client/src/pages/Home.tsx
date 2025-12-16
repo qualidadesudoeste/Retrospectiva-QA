@@ -174,12 +174,13 @@ export default function Home() {
   }));
 
   // Score por cliente
-  // Calcular taxa média de retrabalho de todos os clientes (exceto SEMOP, SECULT e PRODEB)
+  // Calcular taxa média de retrabalho de todos os clientes (exceto SEMOP, SECULT, PRODEB e SEMED)
   const allScores = Object.entries(
     metricasProjetos
       .filter(p => p.Cliente && p.Cliente !== 'SEMOP') // Remover SEMOP
       .filter(p => p.Cliente !== 'SECULT') // Remover SECULT
       .filter(p => p.Cliente !== 'PRODEB') // Remover PRODEB
+      .filter(p => p.Cliente !== 'SEMED') // Remover SEMED
       .filter(p => !(p.Cliente === 'TRANSALVADOR' && p.Projeto && p.Projeto.includes('PATRIMÔNIO'))) // Remover PATRIMÔNIO de TRANSALVADOR
       .reduce((acc, p) => {
         const cliente = p.Cliente;
@@ -244,15 +245,15 @@ export default function Home() {
         {/* Cards de Métricas Principais - Primeira Linha */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 fade-in">
           <div 
-            className="bg-card neon-border-ocean hover:neon-glow-ocean rounded-2xl p-6 text-foreground shadow-xl transform transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:rotate-1 cursor-pointer"
-            onMouseEnter={() => setHoveredCard('liberadas')}
+            className="bg-card neon-border-blue hover:neon-glow-blue rounded-2xl p-6 text-foreground shadow-xl transform transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:rotate-1 cursor-pointer"
+            onMouseEnter={() => setHoveredCard('analisadas')}
             onMouseLeave={() => setHoveredCard(null)}
           >
             <div className="flex items-center justify-between mb-4">
-              <CheckCircle2 className={`w-12 h-12 text-primary transition-all duration-300 ${hoveredCard === 'liberadas' ? 'animate-bounce' : ''}`} />
-              <div className="text-5xl font-black">{sprintsLiberadas}</div>
+              <BarChart3 className={`w-12 h-12 text-secondary transition-all duration-300 ${hoveredCard === 'analisadas' ? 'animate-pulse' : ''}`} />
+              <div className="text-5xl font-black">{totalSprints}</div>
             </div>
-            <div className="text-base font-bold">Sprints Liberadas</div>
+            <div className="text-base font-bold">Sprints Analisadas</div>
           </div>
 
           <div 
@@ -268,32 +269,20 @@ export default function Home() {
           </div>
 
           <div 
-            className="bg-card neon-border-gold hover:neon-glow-gold rounded-2xl p-6 text-foreground shadow-xl transform transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:rotate-1 cursor-pointer"
+            className="bg-card neon-border-blue hover:neon-glow-blue rounded-2xl p-6 text-foreground shadow-xl transform transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:rotate-1 cursor-pointer"
             onMouseEnter={() => setHoveredCard('aceite')}
             onMouseLeave={() => setHoveredCard(null)}
           >
             <div className="flex items-center justify-between mb-4">
-              <Zap className={`w-12 h-12 text-accent transition-all duration-300 ${hoveredCard === 'aceite' ? 'animate-pulse' : ''}`} />
+              <Zap className={`w-12 h-12 text-secondary transition-all duration-300 ${hoveredCard === 'aceite' ? 'animate-pulse' : ''}`} />
               <div className="text-5xl font-black">{taxaAceite1Ciclo}%</div>
             </div>
             <div className="text-base font-bold">Aceite 1º Ciclo</div>
           </div>
         </div>
 
-        {/* Segunda Linha - Métricas de Tempo e Sprints Analisadas */}
+        {/* Segunda Linha - Métricas de Retrabalho */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div 
-            className="bg-card neon-border-blue hover:neon-glow-blue rounded-2xl p-6 text-foreground shadow-xl transform transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:rotate-1 cursor-pointer"
-            onMouseEnter={() => setHoveredCard('analisadas')}
-            onMouseLeave={() => setHoveredCard(null)}
-          >
-            <div className="flex items-center justify-between mb-4">
-              <BarChart3 className={`w-12 h-12 text-secondary transition-all duration-300 ${hoveredCard === 'analisadas' ? 'animate-pulse' : ''}`} />
-              <div className="text-5xl font-black">{totalSprints}</div>
-            </div>
-            <div className="text-base font-bold">Sprints Analisadas</div>
-          </div>
-
           <div 
             className="bg-card neon-border-red rounded-2xl p-6 text-foreground shadow-xl transform transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:rotate-1 cursor-pointer"
             onMouseEnter={() => setHoveredCard('retrabalho')}
@@ -303,7 +292,7 @@ export default function Home() {
               <AlertCircle className={`w-12 h-12 text-destructive transition-all duration-300 ${hoveredCard === 'retrabalho' ? 'animate-bounce' : ''}`} />
               <div className="text-5xl font-black">{retrabalhoMedio}%</div>
             </div>
-            <div className="text-base font-bold">Tempo Retrabalho</div>
+            <div className="text-base font-bold">Tempo Retrabalho (play/pause)</div>
           </div>
 
           <div 
@@ -318,7 +307,17 @@ export default function Home() {
             <div className="text-base font-bold">Retrabalho em Horas</div>
           </div>
 
-
+          <div 
+            className="bg-card neon-border-red hover:neon-glow-red rounded-2xl p-6 text-foreground shadow-xl transform transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:rotate-1 cursor-pointer"
+            onMouseEnter={() => setHoveredCard('retrabalhoAmostragem')}
+            onMouseLeave={() => setHoveredCard(null)}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <TrendingUp className={`w-12 h-12 text-destructive transition-all duration-300 ${hoveredCard === 'retrabalhoAmostragem' ? 'animate-bounce' : ''}`} />
+              <div className="text-5xl font-black">30%</div>
+            </div>
+            <div className="text-base font-bold">Tempo Retrabalho (amostragem)</div>
+          </div>
         </div>
 
         {/* Score por Cliente */}
