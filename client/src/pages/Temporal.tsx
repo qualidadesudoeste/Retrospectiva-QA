@@ -225,14 +225,13 @@ export default function Temporal() {
               </ResponsiveContainer>
             </CardContent>
           </Card>
-        </div>
 
-        {/* Filtros Rápidos */}
-        <Card className="bg-card/40 backdrop-blur-sm border-border/40">
+          {/* Filtros Rápidos */}
+          <Card className="bg-card/40 backdrop-blur-sm border-border/40">
           <CardHeader>
             <CardTitle className="text-base font-bold text-foreground">Filtros de Retrabalho</CardTitle>
           </CardHeader>
-          <CardContent className="grid grid-cols-2 md:grid-cols-4 gap-2">
+          <CardContent className="grid grid-cols-2 gap-2">
             <button
               onClick={() => { setSearchTerm(''); setFilterRetrabalho(null); setIsTableExpanded(true); }}
               className="p-3 bg-background/50 border border-border/40 rounded-lg hover:border-primary/30 hover:bg-background/70 transition-all duration-200 text-left flex items-center justify-between"
@@ -266,6 +265,7 @@ export default function Temporal() {
             </button>
           </CardContent>
         </Card>
+        </div>
 
         {/* Busca e Toggle */}
         <div className="space-y-4">
