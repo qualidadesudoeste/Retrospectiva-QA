@@ -146,32 +146,6 @@ export default function Rankings() {
     { projeto: "SMED - Gestão Pessoas", percentual: 29.41 },
   ];
 
-  // Dados para Ranking por Retrabalho - Análise Detalhada
-  const retrabalhoExcelentes = [
-    { projeto: "CODECON Fiscalização", percentual: 0 },
-    { projeto: "LIVE Educação", percentual: 0 },
-    { projeto: "SEMOB SYSMOBI", percentual: 0.23 },
-    { projeto: "TRANSALVADOR", percentual: 8.27 },
-    { projeto: "LIVE SIGSUAS", percentual: 11 },
-    { projeto: "SEDUR Contratos", percentual: 0 },
-    { projeto: "SEMED SIE Corupipe", percentual: 0 },
-    { projeto: "SEDUR Fiscalização", percentual: 1.02 },
-    { projeto: "SEFAZ Gestão Proj.", percentual: 8.48 },
-    { projeto: "SMED Gestão Pessoas", percentual: 15 },
-  ];
-
-  const retrabalhoAtencao = [
-    { projeto: "SEDUR Licenciamento", percentual: 16.06 },
-    { projeto: "SEMPRE SIGSUAS", percentual: 22.31 },
-    { projeto: "SMED SIE Salvador", percentual: 18.82 },
-    { projeto: "SEMOP SGCI", percentual: 0 },
-  ];
-
-  const retrabalhoCriticos = [
-    { projeto: "SMED Conselho Escolar", percentual: 39.20 },
-    { projeto: "SEFAZ Contratos", percentual: 31.21 },
-  ];
-
   return (
     <TooltipProvider>
       <DashboardLayout>
@@ -242,76 +216,6 @@ export default function Rankings() {
                   </div>
                 </div>
                 {conformidadeCriticos.map((item, idx) => (
-                  <div key={idx} className="group flex items-center justify-between py-2.5 px-3 rounded-lg border border-border/20 bg-card/30 hover:bg-red-500/10 hover:border-red-500/40 transition-all duration-200 cursor-pointer">
-                    <span className="text-sm text-foreground group-hover:text-red-500 group-hover:font-semibold transition-all">{item.projeto}</span>
-                    <span className="text-sm font-bold text-red-500 group-hover:scale-110 transition-transform">{item.percentual}%</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Ranking por Retrabalho - Análise Detalhada */}
-          <div className="space-y-4">
-            <h2 className="text-2xl font-bold text-foreground border-b border-border/50 pb-3">
-              Ranking por Retrabalho - Análise Detalhada
-            </h2>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Coluna Excelente */}
-              <div className="bg-gradient-to-br from-green-500/5 to-green-500/10 border-2 border-green-500/30 rounded-xl p-6 space-y-3 hover:border-green-500/50 hover:shadow-lg hover:shadow-green-500/20 transition-all duration-300">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="p-2 bg-green-500/20 rounded-lg">
-                    <CheckCircle className="w-6 h-6 text-green-500" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-green-500">Excelente</h3>
-                    <p className="text-xs text-green-500/70">(≤15%) - 10 projetos</p>
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 gap-2">
-                  {retrabalhoExcelentes.map((item, idx) => (
-                    <div key={idx} className="group flex items-center justify-between py-2 px-3 rounded-lg border border-border/20 bg-card/30 hover:bg-green-500/10 hover:border-green-500/40 transition-all duration-200 cursor-pointer">
-                      <span className="text-xs text-foreground group-hover:text-green-500 group-hover:font-semibold transition-all">{item.projeto}</span>
-                      <span className="text-xs font-bold text-green-500 group-hover:scale-110 transition-transform">{item.percentual}%</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Coluna Atenção */}
-              <div className="bg-gradient-to-br from-orange-500/5 to-orange-500/10 border-2 border-orange-500/30 rounded-xl p-6 space-y-3 hover:border-orange-500/50 hover:shadow-lg hover:shadow-orange-500/20 transition-all duration-300">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="p-2 bg-orange-500/20 rounded-lg">
-                    <AlertCircle className="w-6 h-6 text-orange-500" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-orange-500">Atenção</h3>
-                    <p className="text-xs text-orange-500/70">(15-30%) - 4 projetos</p>
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 gap-2">
-                  {retrabalhoAtencao.map((item, idx) => (
-                    <div key={idx} className="group flex items-center justify-between py-2 px-3 rounded-lg border border-border/20 bg-card/30 hover:bg-orange-500/10 hover:border-orange-500/40 transition-all duration-200 cursor-pointer">
-                      <span className="text-xs text-foreground group-hover:text-orange-500 group-hover:font-semibold transition-all">{item.projeto}</span>
-                      <span className="text-xs font-bold text-orange-500 group-hover:scale-110 transition-transform">{item.percentual}%</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Coluna Crítico */}
-              <div className="bg-gradient-to-br from-red-500/5 to-red-500/10 border-2 border-red-500/30 rounded-xl p-6 space-y-3 hover:border-red-500/50 hover:shadow-lg hover:shadow-red-500/20 transition-all duration-300">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="p-2 bg-red-500/20 rounded-lg">
-                    <XCircle className="w-6 h-6 text-red-500" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-red-500">Crítico</h3>
-                    <p className="text-xs text-red-500/70">(&gt;30%) - 2 projetos</p>
-                  </div>
-                </div>
-                {retrabalhoCriticos.map((item, idx) => (
                   <div key={idx} className="group flex items-center justify-between py-2.5 px-3 rounded-lg border border-border/20 bg-card/30 hover:bg-red-500/10 hover:border-red-500/40 transition-all duration-200 cursor-pointer">
                     <span className="text-sm text-foreground group-hover:text-red-500 group-hover:font-semibold transition-all">{item.projeto}</span>
                     <span className="text-sm font-bold text-red-500 group-hover:scale-110 transition-transform">{item.percentual}%</span>
