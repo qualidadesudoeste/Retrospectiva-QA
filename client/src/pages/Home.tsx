@@ -270,14 +270,14 @@ export default function Home() {
 
           <div 
             className="bg-card neon-border-blue hover:neon-glow-blue rounded-2xl p-6 text-foreground shadow-xl transform transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:rotate-1 cursor-pointer"
-            onMouseEnter={() => setHoveredCard('aceite')}
+            onMouseEnter={() => setHoveredCard('pontosFuncao')}
             onMouseLeave={() => setHoveredCard(null)}
           >
             <div className="flex items-center justify-between mb-4">
-              <Zap className={`w-12 h-12 text-secondary transition-all duration-300 ${hoveredCard === 'aceite' ? 'animate-pulse' : ''}`} />
-              <div className="text-5xl font-black">{taxaAceite1Ciclo}%</div>
+              <Target className={`w-12 h-12 text-secondary transition-all duration-300 ${hoveredCard === 'pontosFuncao' ? 'animate-pulse' : ''}`} />
+              <div className="text-5xl font-black">20.814,8</div>
             </div>
-            <div className="text-base font-bold">Aceite 1º Ciclo</div>
+            <div className="text-base font-bold">Pontos de Função (SIG)</div>
           </div>
         </div>
 
@@ -297,14 +297,14 @@ export default function Home() {
 
           <div 
             className="bg-card neon-border-red rounded-2xl p-6 text-foreground shadow-xl transform transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:rotate-1 cursor-pointer"
-            onMouseEnter={() => setHoveredCard('retrabalhoHoras')}
+            onMouseEnter={() => setHoveredCard('aceite')}
             onMouseLeave={() => setHoveredCard(null)}
           >
             <div className="flex items-center justify-between mb-4">
-              <Activity className={`w-12 h-12 text-destructive transition-all duration-300 ${hoveredCard === 'retrabalhoHoras' ? 'animate-pulse' : ''}`} />
-              <div className="text-5xl font-black">{totalRetrabalhoHoras}h</div>
+              <Zap className={`w-12 h-12 text-destructive transition-all duration-300 ${hoveredCard === 'aceite' ? 'animate-pulse' : ''}`} />
+              <div className="text-5xl font-black">{taxaAceite1Ciclo}%</div>
             </div>
-            <div className="text-base font-bold">Retrabalho em Horas</div>
+            <div className="text-base font-bold">Aceite 1º Ciclo</div>
           </div>
 
           <div 
