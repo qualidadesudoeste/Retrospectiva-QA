@@ -1,0 +1,33 @@
+DADOS EXTRAÍDOS DO PDF - TRANSALVADOR-SISTEMA DE SINALIZAÇÃO
+
+SPRINTS E CICLOS:
+
+1. Versão 10.0.0 PWA (Novembro)
+   - 1º Ciclo: 10/11 a 12/11 - TESTE
+   - Total: 1 ciclo
+
+2. Versão 11.0.0 (Outubro)
+   - 1º Ciclo: 27/10 a 29/10 - TESTE
+   - 2º Ciclo: 30/10 - RE-TESTE
+   - 3º Ciclo: 31/10 - RE-TESTE
+   - Total: 3 ciclos
+
+3. Versão 12.0.0 (Novembro)
+   - 1º Ciclo: 11/11 a 12/11 - TESTE
+   - 2º Ciclo: 13/11 - RE-TESTE
+   - Total: 2 ciclos
+
+4. Versão 9.0.0 (Setembro)
+   - 1º Ciclo: 08/09 a 09/09 - TESTE
+   - 2º Ciclo: 10/09 - RE-TESTE
+   - 3º Ciclo: 15/09 - RE-TESTE
+   - 4º Ciclo: 22/09 - RE-TESTE
+   - 5º Ciclo: 23/09 - RE-TESTE
+   - Total: 5 ciclos
+
+RESUMO POR MÊS:
+- Setembro: 5 ciclos (versão 9.0.0)
+- Outubro: 3 ciclos (versão 11.0.0)
+- Novembro: 3 ciclos (1 ciclo da 10.0.0 PWA + 2 ciclos da 12.0.0)
+
+TOTAL: 4 sprints, 11 ciclos

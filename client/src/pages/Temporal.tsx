@@ -88,7 +88,8 @@ export default function Temporal() {
       'SEFAZ-AGENDAMENTO': '#f43f5e',
       'SEDUR-CONTRATOS': '#14b8a6',
       'SMED-ALIMENTAÇÃO': '#fb923c',
-      'SEDUR-SAUSE': '#38bdf8'
+      'SEDUR-SAUSE': '#38bdf8',
+      'TRANSALVADOR-SINALIZAÇÃO': '#a855f7'
     };
     return cores[projeto] || '#888';
   };
@@ -129,7 +130,8 @@ export default function Temporal() {
       'LIVE-SIGSUAS',
       'SEMPRE-SIGSUAS',
       'SEDUR-CONTRATOS',
-      'SMED-ALIMENTAÇÃO'
+      'SMED-ALIMENTAÇÃO',
+      'TRANSALVADOR-SINALIZAÇÃO'
     ];
     
     // Agrupar sprints por projeto
