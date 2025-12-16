@@ -164,25 +164,18 @@ export default function Temporal() {
               <CardTitle className="text-lg font-bold text-foreground">Evolução Mensal de Ciclos por Projeto</CardTitle>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={500}>
-                <BarChart 
-                  data={ciclosPorProjetoAgrupado}
-                  layout="horizontal"
-                  margin={{ top: 20, right: 30, left: 120, bottom: 20 }}
-                >
+              <ResponsiveContainer width="100%" height={400}>
+                <BarChart data={ciclosPorProjetoProcessado}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#333" />
                   <XAxis 
-                    type="number"
+                    dataKey="Mes" 
                     stroke="#888" 
                     tick={{ fontSize: 12 }}
-                    label={{ value: 'Ciclos', position: 'insideBottom', offset: -10, style: { fill: '#888' } }}
                   />
                   <YAxis 
-                    type="category"
-                    dataKey="projeto"
                     stroke="#888" 
-                    tick={{ fontSize: 11 }}
-                    width={110}
+                    tick={{ fontSize: 12 }}
+                    label={{ value: 'Ciclos', angle: -90, position: 'insideLeft', style: { fill: '#888' } }}
                   />
                   <Tooltip 
                     contentStyle={{ 
@@ -201,18 +194,23 @@ export default function Temporal() {
                     iconType="rect"
                     iconSize={10}
                   />
-                  {/* Barras agrupadas para cada mês - cores distintas */}
-                  <Bar dataKey="Janeiro" fill="#3b82f6" />
-                  <Bar dataKey="Fevereiro" fill="#8b5cf6" />
-                  <Bar dataKey="Março" fill="#ec4899" />
-                  <Bar dataKey="Abril" fill="#10b981" />
-                  <Bar dataKey="Maio" fill="#f59e0b" />
-                  <Bar dataKey="Junho" fill="#06b6d4" />
-                  <Bar dataKey="Julho" fill="#6366f1" />
-                  <Bar dataKey="Agosto" fill="#84cc16" />
-                  <Bar dataKey="Setembro" fill="#eab308" />
-                  <Bar dataKey="Outubro" fill="#0ea5e9" />
-                  <Bar dataKey="Novembro" fill="#d946ef" />
+                  {/* Barras empilhadas para cada projeto - cores distintas */}
+                  {/* Valores 0 são convertidos em null para não renderizar barras vazias */}
+                  <Bar dataKey="SEMGE-CONTRATOS" stackId="a" fill="#3b82f6" />
+                  <Bar dataKey="CMS-FOLHA DE PAGAMENTO" stackId="a" fill="#8b5cf6" />
+                  <Bar dataKey="CODECON-FISCALIZAÇÃO" stackId="a" fill="#ec4899" />
+                  <Bar dataKey="SEDUR-LICENCIAMENTO" stackId="a" fill="#10b981" />
+                  <Bar dataKey="SEDUR-FISCALIZAÇÃO" stackId="a" fill="#f59e0b" />
+                  <Bar dataKey="LIVE-SIGSUAS" stackId="a" fill="#06b6d4" />
+                  <Bar dataKey="SEMPRE-SIGSUAS" stackId="a" fill="#6366f1" />
+                  <Bar dataKey="SEFAZ-CONTRATOS" stackId="a" fill="#84cc16" />
+                  <Bar dataKey="SEFAZ-FROTAS" stackId="a" fill="#eab308" />
+                  <Bar dataKey="SEFAZ-GESTÃO DE PROJETOS" stackId="a" fill="#0ea5e9" />
+                  <Bar dataKey="SEFAZ-RHWEB" stackId="a" fill="#d946ef" />
+                  <Bar dataKey="SEFAZ-AGENDAMENTO" stackId="a" fill="#f43f5e" />
+                  <Bar dataKey="SEDUR-CONTRATOS" stackId="a" fill="#14b8a6" />
+                  <Bar dataKey="SMED-ALIMENTAÇÃO" stackId="a" fill="#fb923c" />
+                  <Bar dataKey="SEDUR-SAUSE" stackId="a" fill="#38bdf8" />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
