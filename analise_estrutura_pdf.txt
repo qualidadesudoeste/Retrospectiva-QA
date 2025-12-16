@@ -1,0 +1,47 @@
+ANÁLISE DA ESTRUTURA DO PDF DE CICLOS DE TESTE
+
+ESTRUTURA:
+- Cada linha representa uma Sprint/Versão de um projeto
+- Colunas: 1º Ciclo, 2º Ciclo, 3º Ciclo, 4º Ciclo, 5º Ciclo, 6º Ciclo, 7º Ciclo, 8º Ciclo, 9º Ciclo, 10º Ciclo
+- Cada coluna pode ter: "DD/MM a DD/MM - TESTE" ou "DD/MM - RE-TESTE"
+
+CONTAGEM CORRETA DE CICLOS:
+- Contar o número de COLUNAS preenchidas (não o número de palavras "TESTE")
+- Cada coluna = 1 ciclo
+- Exemplo: CODECON 1.0.0 tem 2 colunas preenchidas = 2 ciclos
+  - 1º Ciclo: 30/07 a 01/08 - TESTE
+  - 2º Ciclo: 01/08 - RE-TESTE
+
+EXEMPLOS:
+1. CODECON 1.0.0:
+   - 1º Ciclo: 30/07 a 01/08 - TESTE
+   - 2º Ciclo: 01/08 - RE-TESTE
+   - TOTAL: 2 ciclos
+
+2. CODECON 2.0.0:
+   - 1º Ciclo: 08/08 a 11/08 - TESTE
+   - 2º Ciclo: 12/08 - RE-TESTE
+   - 3º Ciclo: 13/08 - RE-TESTE
+   - TOTAL: 3 ciclos
+
+3. CODECON 7.0.0:
+   - 1º Ciclo: 06/10 a 08/10 - TESTE
+   - TOTAL: 1 ciclo (apenas 1 coluna preenchida)
+
+4. CONTRATOS-SEFAZ 2.0.2:
+   - 1º Ciclo: 10/03 a 12/03 - TESTE
+   - 2º Ciclo: 13/03 - RE-TESTE
+   - 3º Ciclo: 18/03 - RE-TESTE
+   - TOTAL: 3 ciclos
+
+5. CONTRATOS-SEFAZ 3.0.0 - APO:
+   - 1º Ciclo: 10/09 a 12/09 - TESTE
+   - 2º Ciclo: 17/11 - RE-TESTE
+   - 3º Ciclo: 24/11 - RE-TESTE
+   - 4º Ciclo: 28/11 - RE-TESTE
+   - TOTAL: 4 ciclos
+
+LÓGICA CORRETA:
+- Cada linha do PDF representa UMA sprint
+- Contar quantas colunas (1º, 2º, 3º, etc.) estão preenchidas
+- Isso dá o número total de ciclos daquela sprint
