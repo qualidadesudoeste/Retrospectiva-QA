@@ -84,14 +84,16 @@ export default function Temporal() {
       'LIVE-SIGSUAS': '#06b6d4',
       'SEMPRE-SIGSUAS': '#6366f1',
       'SEFAZ-CONTRATOS': '#84cc16',
-      'SEFAZ-FROTAS': '#eab308',
       'SEFAZ-GESTÃO DE PROJETOS': '#0ea5e9',
       'SEFAZ-RHWEB': '#d946ef',
       'SEFAZ-AGENDAMENTO': '#f43f5e',
       'SEDUR-CONTRATOS': '#14b8a6',
       'SMED-ALIMENTAÇÃO': '#fb923c',
       'SEDUR-SAUSE': '#38bdf8',
-      'TRANSALVADOR-SINALIZAÇÃO': '#a855f7'
+      'TRANSALVADOR-SINALIZAÇÃO': '#a855f7',
+      'SEDUR-INTELIGÊNCIA ARTIFICIAL': '#22c55e',
+      'SMED-SISTEMA DE ELEIÇÕES': '#f97316',
+      'SEDUR-INTRANET': '#8b5cf6'
     };
     return cores[projeto] || '#888';
   };
@@ -121,7 +123,6 @@ export default function Temporal() {
       'CODECON-FISCALIZAÇÃO',
       'SEFAZ-CONTRATOS',
       'CMS-FOLHA DE PAGAMENTO',
-      'SEFAZ-FROTAS',
       'SEFAZ-GESTÃO DE PROJETOS',
       'SEDUR-LICENCIAMENTO',
       'SEDUR-FISCALIZAÇÃO',
@@ -133,7 +134,10 @@ export default function Temporal() {
       'SEMPRE-SIGSUAS',
       'SEDUR-CONTRATOS',
       'SMED-ALIMENTAÇÃO',
-      'TRANSALVADOR-SINALIZAÇÃO'
+      'TRANSALVADOR-SINALIZAÇÃO',
+      'SEDUR-INTELIGÊNCIA ARTIFICIAL',
+      'SMED-SISTEMA DE ELEIÇÕES',
+      'SEDUR-INTRANET'
     ];
     
     // Agrupar sprints por projeto
