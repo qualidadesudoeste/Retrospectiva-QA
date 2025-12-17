@@ -205,6 +205,7 @@ export default function Rankings() {
     { cliente: "SEMOB", projeto: "SYSMOBI", sprint: "37.0.0" },
     { cliente: "CODECON", projeto: "FISCALIZAÇÃO", sprint: "7.0.0" },
     { cliente: "CODECON", projeto: "FISCALIZAÇÃO", sprint: "10.0.0" },
+    { cliente: "SEDUR", projeto: "LICENCIAMENTO", sprint: "35.0.0" },
     { cliente: "SEDUR", projeto: "LICENCIAMENTO", sprint: "36.0.0" },
     { cliente: "SEDUR", projeto: "FISCALIZAÇÃO", sprint: "14.0.0" },
     { cliente: "SEDUR", projeto: "CONTRATOS", sprint: "6.0.0" },
@@ -299,15 +300,6 @@ export default function Rankings() {
                 </div>
               ))}
             </div>
-          </div>
-
-          {/* Ranking Completo Original */}
-          <div className="space-y-3">
-            {rankings.slice(0, 5).map((item, idx) => (
-              <div key={idx}>
-                {renderPodiumCard(item, idx + 1)}
-              </div>
-            ))}
           </div>
 
         </div>
